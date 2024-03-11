@@ -259,11 +259,11 @@ class GameController extends GetxController {
     if (_isConsecutive(iconList, playerOneMarker, winCondition)) {
       gameStatus = GameStatus.playerOneWin;
       resultMessage = 'Player 1 Win';
-      result = 'Player 1';
+      result = 'Player 1 승리';
     } else if (_isConsecutive(iconList, playerTwoMarker, winCondition)) {
       gameStatus = GameStatus.playerTwoWin;
       resultMessage = 'Player 2 Win';
-      result = 'Player 2';
+      result = 'Player 2 승리';
     }
     // 무승부 체크
     if (!_isAnyEmptyBox(iconList) &&
@@ -420,6 +420,6 @@ class GameController extends GetxController {
       result: result
     );
 
-    await handler.insertGames(record);
+    await handler.insertRecord(record);
   }
 }

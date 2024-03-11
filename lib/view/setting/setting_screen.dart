@@ -62,7 +62,7 @@ class SettingScreen extends GetView<SettingController> {
                         const GetSnackBar(
                           title: '불가능',
                           message: '게임판 크기를 벗어난 승리조건입니다!!',
-                          duration: const Duration(milliseconds: 1200),
+                          duration: Duration(milliseconds: 1200),
                           icon: Icon(
                             Icons.dangerous,
                             color: Colors.red,

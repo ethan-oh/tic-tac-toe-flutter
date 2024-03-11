@@ -20,7 +20,7 @@ class DatabaseHandler {
   }
 
 //
-  Future<List<RecordModel>> queryGames() async {
+  Future<List<RecordModel>> queryAllRecord() async {
     final Database db = await initializeDB();
     final List<Map<String, Object?>> queryResults =
         await db.rawQuery('SELECT * FROM records ORDER BY dateTime DESC');
@@ -29,7 +29,7 @@ class DatabaseHandler {
   }
 
 //
-  Future<void> insertGames(RecordModel record) async {
+  Future<void> insertRecord(RecordModel record) async {
     final Database db = await initializeDB();
     await db.rawInsert(
         'INSERT INTO records(boardSize, recordData, playerOneIcon, playerTwoIcon, playerOneColor, playerTwoColor, isPlayerOneStartFirst, align, playerOneRemainBackies, playerTwoRemainBackies, dateTime, result) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
@@ -49,7 +49,7 @@ class DatabaseHandler {
         ]);
   }
 
-  Future<void> deleteGames(int id) async {
+  Future<void> deleteRecord(int id) async {
     final Database db = await initializeDB();
     await db.rawDelete('delete from records where id = ?', [id] // []안의 값이 ?값
         );
