@@ -5,9 +5,6 @@ import 'package:sqflite/sqflite.dart';
 import 'package:tic_tac_toe_app/model/record_model.dart';
 
 class DatabaseHandler {
-  Future<void> printPath() async {
-    print(await getDatabasesPath());
-  }
 
   Future<Database> initializeDB() async {
     // db 안에 table이 없을 때만 실행됨

@@ -47,6 +47,7 @@ class SimpleButton extends StatelessWidget {
   }
 }
 
+// ignore: non_constant_identifier_names
 Widget HomeButton() {
   return IconButton(
       onPressed: () => Get.defaultDialog(
