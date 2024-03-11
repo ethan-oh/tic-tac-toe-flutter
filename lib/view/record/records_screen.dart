@@ -26,34 +26,72 @@ class RecordsScreen extends GetView<RecordsController> {
               : ListView.builder(
                   itemCount: controller.records.length,
                   itemBuilder: (context, index) {
-                    return Slidable(
-                      endActionPane: ActionPane(
-                        motion: const BehindMotion(),
-                        children: [
-                          SlidableAction(
-                            backgroundColor: Colors.red,
-                            icon: Icons.delete,
-                            label: '삭제',
-                            onPressed: (context) async {
+                    return GestureDetector(
+                      onTap: () => Get.to(() =>
+                          RecordScreen(recordModel: controller.records[index])),
+                      child: Slidable(
+                        key: ValueKey(index), // onDismissed를 위해
+                        closeOnScroll: true,
+                        endActionPane: ActionPane(
+                          motion: const DrawerMotion(),
+                          dismissible: DismissiblePane(
+                            onDismissed: () async {
+                              // 끝까지 당기면 바로 액션함
                               int id = controller.records[index].id!;
                               await controller.deleteRecord(id);
                             },
                           ),
-                        ],
-                      ),
-                      child: GestureDetector(
-                        onTap: () => Get.to(() => RecordScreen(
-                            recordModel: controller.records[index])),
+                          children: [
+                            SlidableAction(
+                              borderRadius: BorderRadius.circular(10),
+                              backgroundColor: Colors.red,
+                              icon: Icons.delete,
+                              label: '삭제',
+                              onPressed: (context) async {
+                                int id = controller.records[index].id!;
+                                await controller.deleteRecord(id);
+                              },
+                            ),
+                          ],
+                        ),
                         child: SizedBox(
-                          width: 393.w,
+                          width: MediaQuery.of(context).size.width,
                           child: Card(
-                            child: Column(
+                            color: Colors.white,
+                            child: Row(
                               children: [
-                                Text(controller.records[index].dateTime),
-                                Text(
-                                    '게임판 : ${controller.getBoardSize(controller.records[index].boardSize)}'),
-                                Text(
-                                    '승리 조건 : ${controller.records[index].align}칸 완성'),
+                                Container(
+                                  margin: EdgeInsets.all(15.w),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: Colors.black, width: 1)),
+                                  width: 100.w,
+                                  height: 100.w,
+                                  child: resultGameBoard(
+                                    context,
+                                    boardSize:
+                                        controller.records[index].boardSize,
+                                    recordModel: controller.records[index],
+                                    isSmall: true,
+                                  ),
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      controller.records[index].result,
+                                      style: AppStyle.normalTextStyle,
+                                    ),
+                                    Text(
+                                      '조건 : ${controller.records[index].align.toString()}칸 완성',
+                                      style: AppStyle.dateTimeTextStyle,
+                                    ),
+                                    Text(
+                                      controller.records[index].dateTime,
+                                      style: AppStyle.dateTimeTextStyle,
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
                           ),

@@ -25,7 +25,7 @@ class RecordScreen extends StatelessWidget {
           children: [
             Text(
               '승리조건 : ${recordModel.align}칸 완성',
-              style: AppStyle.normalTextStyle,
+              style: AppStyle.smallTextStyle,
             ),
             Row(
               children: [
@@ -33,115 +33,45 @@ class RecordScreen extends StatelessWidget {
                 playerResultInfo(playerOne: false),
               ],
             ),
-            Text(recordModel.result, style: AppStyle.alertTextStyle),
-            resultGameBoard(context, recordModel.boardSize),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(recordModel.result, style: AppStyle.normalTextStyle),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(2.5),
+              child: resultGameBoard(
+                context,
+                boardSize: recordModel.boardSize,
+                recordModel: recordModel,
+                isSmall: false,
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget resultGameBoard(context, int boardSize) {
-    int gridCount = boardSize;
-    double width = MediaQuery.of(context).size.width;
-    bool isPlayerOneStartFirst =
-        recordModel.isPlayerOneStartFirst == 1 ? true : false;
-    Map<String, int> recordData = recordModel.convertRecordDataToMap();
-    List<Widget> boxList = [];
-    for (int i = 1; i <= boardSize; i++) {
-      for (int j = 1; j <= boardSize; j++) {
-        IconData icon;
-        Color color;
-        if (isPlayerOneStartFirst) {
-          // 홀수가 player1
-          icon = recordData['($i,$j)']! == 0
-              ? Icons.abc
-              : (recordData['($i,$j)']! % 2 == 0)
-                  ? recordModel.getPlayerTwoIcon()
-                  : recordModel.getPlayerOneIcon();
-          color = recordData['($i,$j)']! == 0
-              ? Colors.transparent
-              : (recordData['($i,$j)']! % 2 == 0)
-                  ? recordModel.getPlayerTwoColor()
-                  : recordModel.getPlayerOneColor();
-        } else {
-          // 홀수가 player2
-          icon = recordData['($i,$j)']! == 0
-              ? Icons.abc
-              : (recordData['($i,$j)']! % 2 == 0)
-                  ? recordModel.getPlayerOneIcon()
-                  : recordModel.getPlayerTwoIcon();
-          color = recordData['($i,$j)']! == 0
-              ? Colors.transparent
-              : (recordData['($i,$j)']! % 2 == 0)
-                  ? recordModel.getPlayerOneColor()
-                  : recordModel.getPlayerTwoColor();
-        }
-
-        boxList.add(
-          resultBoardBox(context, i, j, gridCount, recordData,
-              icon: icon, color: color),
-        );
-      }
-    }
-    return SizedBox(
-      width: width > 600 ? (600 + boardSize.toDouble() * 10) : width,
-      child: GridView(
-        shrinkWrap: true,
-        padding: const EdgeInsets.symmetric(horizontal: 5),
-        physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: gridCount),
-        children: boxList,
-      ),
-    );
-  }
-
-  Widget resultBoardBox(
-      context, int x, int y, boardSize, Map<String, int> recordData,
-      {IconData? icon, Color? color}) {
-    double borderWidth = 10;
-    double width = MediaQuery.of(context).size.width / boardSize - borderWidth;
-    return Center(
-      child: Container(
-        width: width > 200 ? 200 : width,
-        height: width > 200 ? 200 : width,
-        color: Colors.white70,
-        child: LayoutBuilder(
-          builder: (context, constraints) => Stack(
-            alignment: Alignment.center,
-            children: [
-              Icon(icon,
-                  size: constraints.maxWidth * 0.8, // container의 사이즈에 맞게 동적 조절
-                  color: color),
-              Positioned(
-                top: 5,
-                right: 5,
-                child: Text(recordData['($x,$y)'] == 0
-                    ? ''
-                    : recordData['($x,$y)'].toString()),
-              ),
-              // : '')),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget playerResultInfo({required bool playerOne}) {
+  Widget playerResultInfo({
+    required bool playerOne,
+  }) {
     return Container(
       width: 170.w,
       padding: const EdgeInsets.symmetric(vertical: 10),
       margin: const EdgeInsets.all(10),
       child: Column(
         children: [
-          Text(
-            'Player ${playerOne ? 1 : 2}',
-            style: AppStyle.settingTitleStyle,
+          Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Text(
+              'Player ${playerOne ? 1 : 2}',
+              style: AppStyle.settingTitleStyle,
+            ),
           ),
           Text(
-              '남은 무르기 수 : ${playerOne ? recordModel.playerOneRemainBackies : recordModel.playerTwoRemainBackies}회'),
+              '남은 무르기 : ${playerOne ? recordModel.playerOneRemainBackies : recordModel.playerTwoRemainBackies}회',
+              style: AppStyle.smallTextStyle,
+          ),
           Icon(
             playerOne
                 ? recordModel.getPlayerOneIcon()
@@ -155,4 +85,97 @@ class RecordScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget resultGameBoard(context,
+    {required int boardSize,
+    required RecordModel recordModel,
+    required bool isSmall}) {
+  int gridCount = boardSize;
+  bool isPlayerOneStartFirst =
+      recordModel.isPlayerOneStartFirst == 1 ? true : false;
+  Map<String, int> recordData = recordModel.convertRecordDataToMap();
+  List<Widget> boxList = [];
+  for (int i = 1; i <= boardSize; i++) {
+    for (int j = 1; j <= boardSize; j++) {
+      IconData icon;
+      Color color;
+      if (isPlayerOneStartFirst) {
+        // 홀수가 player1
+        icon = recordData['($i,$j)']! == 0
+            ? Icons.abc
+            : (recordData['($i,$j)']! % 2 == 0)
+                ? recordModel.getPlayerTwoIcon()
+                : recordModel.getPlayerOneIcon();
+        color = recordData['($i,$j)']! == 0
+            ? Colors.transparent
+            : (recordData['($i,$j)']! % 2 == 0)
+                ? recordModel.getPlayerTwoColor()
+                : recordModel.getPlayerOneColor();
+      } else {
+        // 홀수가 player2
+        icon = recordData['($i,$j)']! == 0
+            ? Icons.abc
+            : (recordData['($i,$j)']! % 2 == 0)
+                ? recordModel.getPlayerOneIcon()
+                : recordModel.getPlayerTwoIcon();
+        color = recordData['($i,$j)']! == 0
+            ? Colors.transparent
+            : (recordData['($i,$j)']! % 2 == 0)
+                ? recordModel.getPlayerOneColor()
+                : recordModel.getPlayerTwoColor();
+      }
+
+      boxList.add(
+        resultBoardBox(context, i, j, gridCount, recordData,
+            icon: icon, color: color, isSmall: isSmall),
+      );
+    }
+  }
+  return SizedBox(
+    width: 393.w,
+    child: GridView(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate:
+          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: gridCount),
+      children: boxList,
+    ),
+  );
+}
+
+Widget resultBoardBox(
+    context, int x, int y, int boardSize, Map<String, int> recordData,
+    {IconData? icon, Color? color, required bool isSmall}) {
+  return Center(
+    child: Container(
+      color: Colors.white,
+      child: Container(
+        decoration: BoxDecoration(
+            border: isSmall
+                ? Border.all(color: Colors.black, width: 1)
+                : Border.all(color: Colors.blueGrey, width: 3)),
+        width: 393.w / boardSize,
+        height: 393.w / boardSize,
+        child: LayoutBuilder(
+          builder: (context, constraints) => Stack(
+            alignment: Alignment.center,
+            children: [
+              Icon(icon,
+                  size: constraints.maxWidth * 0.8, // container의 사이즈에 맞게 동적 조절
+                  color: color),
+              Positioned(
+                top: 2,
+                right: 2,
+                child: Text(recordData['($x,$y)'] == 0 || isSmall
+                    ? ''
+                    : recordData['($x,$y)'].toString()),
+              ),
+              // : '')),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
 }

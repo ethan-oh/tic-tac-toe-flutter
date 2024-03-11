@@ -15,6 +15,12 @@ class AppStyle{
     fontSize: 20
   );
 
+  static const TextStyle smallTextStyle = TextStyle(
+    fontFamily: 'Jalnan2',
+    fontWeight: FontWeight.normal,
+    fontSize: 17
+  );
+
   static const TextStyle alertTextStyle = TextStyle(
     fontFamily: 'Jalnan2',
     fontWeight: FontWeight.normal,
@@ -40,6 +46,12 @@ class AppStyle{
     fontWeight: FontWeight.bold,
     color: Colors.white,
     fontSize: 50,
+  );
+
+  static const TextStyle dateTimeTextStyle = TextStyle(
+    decoration: TextDecoration.none, // scafold 안에 없기 때문에 스타일 안 준다.
+    color: Colors.black54,
+    fontSize: 13,
   );
 
 

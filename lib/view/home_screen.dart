@@ -47,9 +47,6 @@ class HomeScreen extends StatelessWidget {
                 })),
               ),
               const Spacer(),
-              SimpleButton(title: "title", onPressed: () async{
-                print(await getDatabasesPath());
-              },)
             ],
           ),
         ),
