@@ -58,16 +58,17 @@ class SettingScreen extends GetView<SettingController> {
                     onValueChanged: (value) {
                       bool isImpossible = controller.selectAlign(value);
                       if (isImpossible) {
-                        Get.snackbar(
-                          '불가능',
-                          '게임판 크기를 벗어난 승리조건입니다!!',
+                        Get.closeAllSnackbars(); // 여러 번 클릭해도 한 번만 보이게 미리 닫는다
+                        const GetSnackBar(
+                          title: '불가능',
+                          message: '게임판 크기를 벗어난 승리조건입니다!!',
                           duration: const Duration(milliseconds: 1200),
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.dangerous,
                             color: Colors.red,
                             size: 30,
                           ),
-                        );
+                        ).show();
                       }
                     },
                     children: <AlignOpt, Widget>{

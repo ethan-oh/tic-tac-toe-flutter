@@ -11,6 +11,7 @@ Widget boardBox(context, int x, int y, {IconData? icon}) {
     onTap: () {
       bool isEmptyBox = controller.boxClickAction(x, y);
       if (!isEmptyBox) {
+        Get.closeAllSnackbars();
         Get.snackbar(
           '안돼요!!',
           '이미 놓은 자리에요!!',
