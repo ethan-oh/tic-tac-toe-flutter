@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:tic_tac_toe_app/%08common/button.dart';
 import 'package:tic_tac_toe_app/controller/records_controller.dart';
 import 'package:tic_tac_toe_app/view/record/records_screen.dart';
@@ -46,6 +47,9 @@ class HomeScreen extends StatelessWidget {
                 })),
               ),
               const Spacer(),
+              SimpleButton(title: "title", onPressed: () async{
+                print(await getDatabasesPath());
+              },)
             ],
           ),
         ),

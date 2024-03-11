@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 
 class RecordModel {
+  final int? id;
   final int boardSize; // 게임판 크기
   final int playerOneIconCode;
   final int playerTwoIconCode;
@@ -16,7 +17,9 @@ class RecordModel {
   final String result;
 
   RecordModel(
-      {required this.boardSize,
+      {
+      this.id,
+      required this.boardSize,
       required this.recordData,
       required this.playerOneIconCode,
       required this.playerTwoIconCode,
@@ -32,6 +35,7 @@ class RecordModel {
 
   factory RecordModel.fromJson(Map<String, dynamic> json) {
     return RecordModel(
+        id: json['id'],
         boardSize: json['boardSize'],
         recordData: json['recordData'],
         playerOneIconCode: json['playerOneIcon'],
