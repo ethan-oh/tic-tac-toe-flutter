@@ -27,6 +27,16 @@ class SimpleButton extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Container(
         constraints: const BoxConstraints(maxWidth: 400),
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.3),
+              spreadRadius: 1,
+              blurRadius: 10,
+              offset: const Offset(0, 0),
+            ),
+          ],
+        ),
         width: width,
         height: height,
         child: ElevatedButton(
@@ -58,7 +68,7 @@ Widget HomeButton() {
           backgroundColor: Colors.white,
           confirmTextColor: Colors.white,
           textConfirm: "확인",
-          onConfirm: () => Get.offAll(()=> const HomeScreen()),
+          onConfirm: () => Get.offAll(() => const HomeScreen()),
           textCancel: "취소",
           onCancel: () {}),
       icon: Icon(

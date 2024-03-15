@@ -84,44 +84,46 @@ class RecordsScreen extends GetView<RecordsController> {
 }
 
 Widget recordCard(context, RecordModel record) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-    child: Card(
-      color: Colors.black.withOpacity(0.01),
-      child: Row(
-        children: [
-          Container(
-            margin: EdgeInsets.all(15.w),
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.black, width: 1)),
-            width: 100.w,
-            height: 100.w,
-            child: resultGameBoard(
-              context,
-              boardSize: record.boardSize,
-              recordModel: record,
-              isSmall: true,
+  return Container(
+    margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+    decoration: BoxDecoration(
+      color: Colors.black.withOpacity(0.2),
+      borderRadius: BorderRadius.circular(20),
+    ),
+    child: Row(
+      children: [
+        Container(
+          margin: EdgeInsets.all(15.w),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black, width: 1),
+          ),
+          width: 100.w,
+          height: 100.w,
+          child: resultGameBoard(
+            context,
+            boardSize: record.boardSize,
+            recordModel: record,
+            isSmall: true,
+          ),
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              record.result,
+              style: AppStyle.normalTextStyle,
             ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                record.result,
-                style: AppStyle.normalTextStyle,
-              ),
-              Text(
-                '조건 : ${record.align.toString()}칸 완성',
-                style: AppStyle.dateTimeTextStyle,
-              ),
-              Text(
-                record.dateTime,
-                style: AppStyle.dateTimeTextStyle,
-              ),
-            ],
-          ),
-        ],
-      ),
+            Text(
+              '조건 : ${record.align.toString()}칸 완성',
+              style: AppStyle.dateTimeTextStyle,
+            ),
+            Text(
+              record.dateTime,
+              style: AppStyle.dateTimeTextStyle,
+            ),
+          ],
+        ),
+      ],
     ),
   );
 }

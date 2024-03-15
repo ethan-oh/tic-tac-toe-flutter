@@ -11,24 +11,24 @@ import 'package:tic_tac_toe_app/model/setting_model.dart';
 enum GameStatus { playing, playerOneWin, playerTwoWin, draw }
 
 class GameController extends GetxController {
+  final SettingModel settings;
+  GameController(this.settings);
+
   @override
   void onInit() {
     super.onInit();
-    gameInit();
+    _loadSetting();
+    _gameInit();
   }
 
-  // binding 받아온 game setting 값
-  final SettingModel settings;
-  // 생성자 통해 setting값 받아오기
-  GameController(this.settings);
-
   // setting model을 통해 받아온 설정값을 변수에 저장
-  late final IconData playerOneMarker = settings.playerOneMarker;
-  late final IconData playerTwoMarker = settings.playerTwoMarker;
-  late final Color playerOneColor = settings.playerOneColor;
-  late final Color playerTwoColor = settings.playerTwoColor;
-  late final int gridCount = settings.gridCount;
-  late final int alignCount = settings.alignCount;
+  late final IconData playerOneMarker;
+  late final IconData playerTwoMarker;
+  late final Color playerOneColor;
+  late final Color playerTwoColor;
+  late final int gridCount;
+  late final int alignCount;
+
   // 2차원 Icon 리스트
   late List<List<IconData>> iconList;
   // 게임 턴 확인
@@ -51,7 +51,7 @@ class GameController extends GetxController {
   // 현재 게임 상태
   late GameStatus gameStatus;
   late String resultMessage;
-  // 기록 저장을 위한 좌표값 배열
+  // 기록 저장을 위한 좌표값 Map. ex) {'(1,1)' : 3}
   late Map<String, int> recordData;
   // 놓은 순서 저장 위한 변수
   late int index;
@@ -59,7 +59,7 @@ class GameController extends GetxController {
   late String result;
 
   /////////////////////////// 게임 세팅 /////////////////////////////////
-  void gameInit() {
+  void _gameInit() {
     isPlayerOneBacksiesButtonDisable = true;
     isPlayerTwoBacksiesButtonDisable = true;
     isAlreadyUseBacksies = false;
@@ -76,11 +76,20 @@ class GameController extends GetxController {
     gameStatus = GameStatus.playing;
     index = 0;
     result = '';
-    _iconListInit();
-    recordDataInit();
+    _iconListInit(); // 이중 아이콘 배열 Icons.abc로 초기화
+    _recordDataInit(); // 순서 저장할 map 초기화
   }
 
-  void recordDataInit() {
+  void _loadSetting() {
+    playerOneMarker = settings.playerOneMarker;
+    playerTwoMarker = settings.playerTwoMarker;
+    playerOneColor = settings.playerOneColor;
+    playerTwoColor = settings.playerTwoColor;
+    gridCount = settings.gridCount;
+    alignCount = settings.alignCount;
+  }
+
+  void _recordDataInit() {
     recordData = {};
     for (int i = 1; i <= gridCount; i++) {
       for (int j = 1; j <= gridCount; j++) {
@@ -116,7 +125,7 @@ class GameController extends GetxController {
   }
 
   void restart() {
-    gameInit();
+    _gameInit();
     update();
   }
 

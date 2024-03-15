@@ -42,7 +42,7 @@ enum MarkerOpt {
 
 enum ColorOpt {
   blue(Colors.indigo),
-  red(Color.fromRGBO(211, 47, 47, 1)),
+  red(Color(0xFFD32F2F)),
   green(Colors.green),
   orange(Colors.orange);
 

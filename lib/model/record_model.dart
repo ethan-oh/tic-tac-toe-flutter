@@ -32,6 +32,7 @@ class RecordModel {
     required this.result,
   });
 
+  // db에서 Json 데이터 받아와 RecordModel로 변환
   factory RecordModel.fromJson(Map<String, dynamic> json) {
     return RecordModel(
       id: json['id'],
@@ -51,7 +52,8 @@ class RecordModel {
   }
 
   // static 놓은 이유: factory 생성자에서 사용하려면 미리 만들어진 함수여야함.
-  static String _formatStringDateTime(String stringDateTime) {
+  // 날짜순으로 정렬하기 위해 db에는 원본으로 저장, 담아줄 때는 변환해서 저장하기 위한 함수
+    static String _formatStringDateTime(String stringDateTime) {
     DateTime dateTime = DateTime.parse(stringDateTime);
     dateTime = dateTime.toUtc().add(const Duration(hours: 9));
     String year = dateTime.year.toString().padLeft(4, '0');
@@ -97,7 +99,7 @@ class RecordModel {
       case 1:
         return Colors.indigo;
       case 2:
-        return Colors.red[700]!;
+        return const Color(0xFFD32F2F);
       case 3:
         return Colors.green;
       case 4:
@@ -112,7 +114,7 @@ class RecordModel {
       case 1:
         return Colors.indigo;
       case 2:
-        return Colors.red[700]!;
+        return const Color(0xFFD32F2F);
       case 3:
         return Colors.green;
       case 4:

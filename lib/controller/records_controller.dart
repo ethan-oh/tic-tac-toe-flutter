@@ -15,12 +15,13 @@ class RecordsController extends GetxController {
   late DatabaseHandler handler;
   List<RecordModel> records = [];
 
+  // 전체 검색
   Future<void> queryAllRecords() async {
     records = await handler.queryAllRecord();
     update();
   }
 
-  String getBoardSize(int boardSize) {
+  String convertBoardCountToString(int boardSize) {
     return boardSize == 3
         ? '3X3'
         : boardSize == 4
@@ -28,6 +29,7 @@ class RecordsController extends GetxController {
             : '5X5';
   }
 
+  // 디비에서 삭제 후 재검색
   Future<void> deleteRecord(int id) async {
     await handler.deleteRecord(id);
     queryAllRecords();
