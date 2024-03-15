@@ -16,42 +16,41 @@ class RecordModel {
   final String dateTime;
   final String result;
 
-  RecordModel(
-      {
-      this.id,
-      required this.boardSize,
-      required this.recordData,
-      required this.playerOneIconCode,
-      required this.playerTwoIconCode,
-      required this.playerOneColorIndex,
-      required this.playerTwoColorIndex,
-      required this.isPlayerOneStartFirst,
-      required this.align,
-      required this.playerOneRemainBackies,
-      required this.playerTwoRemainBackies,
-      required this.dateTime,
-      required this.result,
-      });
+  RecordModel({
+    this.id,
+    required this.boardSize,
+    required this.recordData,
+    required this.playerOneIconCode,
+    required this.playerTwoIconCode,
+    required this.playerOneColorIndex,
+    required this.playerTwoColorIndex,
+    required this.isPlayerOneStartFirst,
+    required this.align,
+    required this.playerOneRemainBackies,
+    required this.playerTwoRemainBackies,
+    required this.dateTime,
+    required this.result,
+  });
 
   factory RecordModel.fromJson(Map<String, dynamic> json) {
     return RecordModel(
-        id: json['id'],
-        boardSize: json['boardSize'],
-        recordData: json['recordData'],
-        playerOneIconCode: json['playerOneIcon'],
-        playerTwoIconCode: json['playerTwoIcon'],
-        playerOneColorIndex: json['playerOneColor'],
-        playerTwoColorIndex: json['playerTwoColor'],
-        isPlayerOneStartFirst: json['isPlayerOneStartFirst'],
-        align: json['align'],
-        playerOneRemainBackies: json['playerOneRemainBackies'],
-        playerTwoRemainBackies: json['playerTwoRemainBackies'],
-        dateTime: _formatStringDateTime(json['dateTime']),
-        result: json['result'],
-        );
+      id: json['id'],
+      boardSize: json['boardSize'],
+      recordData: json['recordData'],
+      playerOneIconCode: json['playerOneIcon'],
+      playerTwoIconCode: json['playerTwoIcon'],
+      playerOneColorIndex: json['playerOneColor'],
+      playerTwoColorIndex: json['playerTwoColor'],
+      isPlayerOneStartFirst: json['isPlayerOneStartFirst'],
+      align: json['align'],
+      playerOneRemainBackies: json['playerOneRemainBackies'],
+      playerTwoRemainBackies: json['playerTwoRemainBackies'],
+      dateTime: _formatStringDateTime(json['dateTime']),
+      result: json['result'],
+    );
   }
 
-  // static 놓은 이유: factory 생성자에서 사용하려면 미리 만들어진 함수여야함. 
+  // static 놓은 이유: factory 생성자에서 사용하려면 미리 만들어진 함수여야함.
   static String _formatStringDateTime(String stringDateTime) {
     DateTime dateTime = DateTime.parse(stringDateTime);
     dateTime = dateTime.toUtc().add(const Duration(hours: 9));
@@ -129,14 +128,16 @@ class RecordModel {
     Map<String, int> resultMap = {};
 
     // 각 키-값 쌍을 반복하여 맵에 추가합니다.
-    dynamicMap.forEach((key, value) {
-      resultMap[key] = value as int;
-    });
+    dynamicMap.forEach(
+      (key, value) {
+        resultMap[key] = value as int;
+      },
+    );
 
     return resultMap;
   }
 
-    static int getPlayerIconCode(IconData iconData) {
+  static int getPlayerIconCode(IconData iconData) {
     switch (iconData) {
       case Icons.circle_outlined:
         return 1;

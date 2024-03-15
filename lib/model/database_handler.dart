@@ -5,7 +5,6 @@ import 'package:sqflite/sqflite.dart';
 import 'package:tic_tac_toe_app/model/record_model.dart';
 
 class DatabaseHandler {
-
   Future<Database> initializeDB() async {
     // db 안에 table이 없을 때만 실행됨
     String path = await getDatabasesPath();
@@ -32,26 +31,29 @@ class DatabaseHandler {
   Future<void> insertRecord(RecordModel record) async {
     final Database db = await initializeDB();
     await db.rawInsert(
-        'INSERT INTO records(boardSize, recordData, playerOneIcon, playerTwoIcon, playerOneColor, playerTwoColor, isPlayerOneStartFirst, align, playerOneRemainBackies, playerTwoRemainBackies, dateTime, result) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
-        [
-          record.boardSize,
-          record.recordData.toString(), // recordData를 문자열로 변환하여 삽입
-          record.playerOneIconCode,
-          record.playerTwoIconCode,
-          record.playerOneColorIndex,
-          record.playerTwoColorIndex,
-          record.isPlayerOneStartFirst,
-          record.align,
-          record.playerOneRemainBackies,
-          record.playerTwoRemainBackies,
-          record.dateTime,
-          record.result,
-        ]);
+      'INSERT INTO records(boardSize, recordData, playerOneIcon, playerTwoIcon, playerOneColor, playerTwoColor, isPlayerOneStartFirst, align, playerOneRemainBackies, playerTwoRemainBackies, dateTime, result) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
+      [
+        record.boardSize,
+        record.recordData.toString(), // recordData를 문자열로 변환하여 삽입
+        record.playerOneIconCode,
+        record.playerTwoIconCode,
+        record.playerOneColorIndex,
+        record.playerTwoColorIndex,
+        record.isPlayerOneStartFirst,
+        record.align,
+        record.playerOneRemainBackies,
+        record.playerTwoRemainBackies,
+        record.dateTime,
+        record.result,
+      ],
+    );
   }
 
   Future<void> deleteRecord(int id) async {
     final Database db = await initializeDB();
-    await db.rawDelete('delete from records where id = ?', [id] // []안의 값이 ?값
-        );
+    await db.rawDelete(
+      'delete from records where id = ?', 
+      [id], // []안의 값이 ?값
+    );
   }
 } // End

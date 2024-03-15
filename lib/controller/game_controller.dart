@@ -189,7 +189,7 @@ class GameController extends GetxController {
       isPlayerOneTurn = !isPlayerOneTurn;
       isAlreadyUseBacksies = false;
       _backsiesButtonDisableCheck();
-      gameCheck();
+      _gameCheck();
     } else {
       isEmpty = false;
     }
@@ -254,7 +254,7 @@ class GameController extends GetxController {
   }
 
   ////////////////////////// 승리 체크 ////////////////////////////////
-  void gameCheck() {
+  void _gameCheck() {
     // 승리 체크
     if (_isConsecutive(iconList, playerOneMarker, winCondition)) {
       gameStatus = GameStatus.playerOneWin;
@@ -404,7 +404,6 @@ class GameController extends GetxController {
   // db에 저장
   Future<void> saveRecord() async {
     DatabaseHandler handler = DatabaseHandler();
-
     RecordModel record = RecordModel(
       boardSize: boardSize,
       recordData: jsonEncode(recordData),

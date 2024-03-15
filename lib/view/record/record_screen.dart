@@ -69,8 +69,8 @@ class RecordScreen extends StatelessWidget {
             ),
           ),
           Text(
-              '남은 무르기 : ${playerOne ? recordModel.playerOneRemainBackies : recordModel.playerTwoRemainBackies}회',
-              style: AppStyle.smallTextStyle,
+            '남은 무르기 : ${playerOne ? recordModel.playerOneRemainBackies : recordModel.playerTwoRemainBackies}회',
+            style: AppStyle.smallTextStyle,
           ),
           Icon(
             playerOne
@@ -167,11 +167,12 @@ Widget resultBoardBox(
               Positioned(
                 top: 2,
                 right: 2,
-                child: Text(recordData['($x,$y)'] == 0 || isSmall
-                    ? ''
-                    : recordData['($x,$y)'].toString()),
+                child: Text(
+                  recordData['($x,$y)'] == 0 || isSmall
+                      ? ''
+                      : recordData['($x,$y)'].toString(),
+                ),
               ),
-              // : '')),
             ],
           ),
         ),

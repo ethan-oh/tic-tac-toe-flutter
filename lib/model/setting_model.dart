@@ -10,12 +10,12 @@ class SettingModel {
   final TurnOpt firstPlayer;
 
   SettingModel({
-      required this.gridOpt,
-      required this.alignOpt,
-      required this.player1Marker,
-      required this.player1Color,
-      required this.player2Marker,
-      required this.player2Color,
-      required this.firstPlayer,
-    });
+    required this.gridOpt,
+    required this.alignOpt,
+    required this.player1Marker,
+    required this.player1Color,
+    required this.player2Marker,
+    required this.player2Color,
+    required this.firstPlayer,
+  });
 }

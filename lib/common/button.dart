@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tic_tac_toe_app/%08common/font_style.dart';
-import 'package:tic_tac_toe_app/view/home_screen.dart';
+import 'package:tic_tac_toe_app/view/home/home_screen.dart';
 
 class SimpleButton extends StatelessWidget {
   final VoidCallback? onPressed;
@@ -25,7 +25,8 @@ class SimpleButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: SizedBox(
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 400),
         width: width,
         height: height,
         child: ElevatedButton(
@@ -57,7 +58,7 @@ Widget HomeButton() {
           backgroundColor: Colors.white,
           confirmTextColor: Colors.white,
           textConfirm: "확인",
-          onConfirm: () => Get.offAll(const HomeScreen()),
+          onConfirm: () => Get.offAll(()=> const HomeScreen()),
           textCancel: "취소",
           onCancel: () {}),
       icon: Icon(
