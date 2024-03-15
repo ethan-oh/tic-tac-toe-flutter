@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tic_tac_toe_app/common/button.dart';
@@ -5,6 +6,7 @@ import 'package:tic_tac_toe_app/controller/records_controller.dart';
 import 'package:tic_tac_toe_app/view/record/records_screen.dart';
 import 'package:tic_tac_toe_app/view/setting/setting_screen.dart';
 import 'package:tic_tac_toe_app/controller/setting_controller.dart';
+import 'package:tic_tac_toe_app/common/error_snackbar.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -18,7 +20,7 @@ class HomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Spacer(),
-              logoImage(),
+              logoImageBox(),
               const Spacer(),
               startButton(),
               recordButton(),
@@ -36,16 +38,21 @@ class HomeScreen extends StatelessWidget {
       width: 300,
       height: 70,
       color: Colors.teal[800],
-      onPressed: () => Get.to(
-        () => const RecordsScreen(),
-        binding: BindingsBuilder(
-          () {
-            Get.put(
-              RecordsController(),
-            );
-          },
-        ),
-      ),
+      onPressed: () => (!kIsWeb)
+          ? Get.to(
+              () => const RecordsScreen(),
+              binding: BindingsBuilder(
+                () {
+                  Get.put(
+                    RecordsController(),
+                  );
+                },
+              ),
+            )
+          : errorSnackBar(
+              title: '경고',
+              message: '모바일 앱에서만 사용 가능한 기능입니다.',
+            ),
     );
   }
 
@@ -66,7 +73,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Image logoImage() {
+  Image logoImageBox() {
     return Image.asset(
       'assets/images/game_logo.png',
       width: 300,

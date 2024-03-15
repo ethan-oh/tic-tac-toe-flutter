@@ -1,9 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tic_tac_toe_app/common/button.dart';
 import 'package:tic_tac_toe_app/common/font_style.dart';
 import 'package:tic_tac_toe_app/controller/game_controller.dart';
 import 'package:tic_tac_toe_app/view/home/home_screen.dart';
+import 'package:tic_tac_toe_app/common/error_snackbar.dart';
 
 class MenuScreen extends GetView<GameController> {
   const MenuScreen({super.key});
@@ -55,18 +57,23 @@ class MenuScreen extends GetView<GameController> {
 
   SimpleButton saveButton(GameController controller) {
     return SimpleButton(
-      onPressed: () => Get.defaultDialog(
-        title: "저장",
-        middleText: "게임 기록을 저장하시겠습니까?",
-        buttonColor: Colors.blue,
-        backgroundColor: Colors.white,
-        confirmTextColor: Colors.white,
-        textConfirm: "확인",
-        onConfirm: () async => controller
-            .saveRecord()
-            .then((value) => Get.offAll(() => const HomeScreen())),
-        textCancel: "취소",
-      ),
+      onPressed: () => (!kIsWeb)
+          ? Get.defaultDialog(
+              title: "저장",
+              middleText: "게임 기록을 저장하시겠습니까?",
+              buttonColor: Colors.blue,
+              backgroundColor: Colors.white,
+              confirmTextColor: Colors.white,
+              textConfirm: "확인",
+              onConfirm: () async => controller
+                  .saveRecord()
+                  .then((value) => Get.offAll(() => const HomeScreen())),
+              textCancel: "취소",
+            )
+          : errorSnackBar(
+              title: '경고',
+              message: '모바일 앱에서만 사용 가능한 기능입니다.',
+            ),
       title: '기록하기',
       color: Colors.transparent,
       elevation: 0,
