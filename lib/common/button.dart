@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tic_tac_toe_app/%08common/font_style.dart';
+import 'package:tic_tac_toe_app/common/font_style.dart';
 import 'package:tic_tac_toe_app/view/home/home_screen.dart';
 
 class SimpleButton extends StatelessWidget {

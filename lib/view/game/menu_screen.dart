@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tic_tac_toe_app/%08common/button.dart';
-import 'package:tic_tac_toe_app/%08common/font_style.dart';
+import 'package:tic_tac_toe_app/common/button.dart';
+import 'package:tic_tac_toe_app/common/font_style.dart';
 import 'package:tic_tac_toe_app/controller/game_controller.dart';
 import 'package:tic_tac_toe_app/view/home/home_screen.dart';
 
