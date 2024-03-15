@@ -11,17 +11,7 @@ Widget boardBox(context, int x, int y, {IconData? icon}) {
     onTap: () {
       bool isEmptyBox = controller.boxClickAction(x, y);
       if (!isEmptyBox) {
-        Get.closeAllSnackbars();
-        Get.snackbar(
-          '안돼요!!',
-          '이미 놓은 자리에요!!',
-          duration: const Duration(seconds: 1),
-          icon: const Icon(
-            Icons.warning,
-            color: Colors.red,
-            size: 30,
-          ),
-        );
+        errorSnackBar();
       }
     },
     child: Center(
@@ -43,15 +33,31 @@ Widget boardBox(context, int x, int y, {IconData? icon}) {
               Positioned(
                 top: 5,
                 right: 5,
-                child: Text(controller.recordData['($x,$y)'] == 0
-                    ? ''
-                    // : controller.recordData['($x,$y)'].toString()),
-                    :'')
+                child: Text(
+                  controller.recordData['($x,$y)'] == 0
+                      ? ''
+                      // : controller.recordData['($x,$y)'].toString()),
+                      : '',
+                ),
               ),
             ],
           ),
         ),
       ),
+    ),
+  );
+}
+
+void errorSnackBar() {
+  Get.closeAllSnackbars();
+  Get.snackbar(
+    '안돼요!!',
+    '이미 놓은 자리에요!!',
+    duration: const Duration(seconds: 1),
+    icon: const Icon(
+      Icons.warning,
+      color: Colors.red,
+      size: 30,
     ),
   );
 }
