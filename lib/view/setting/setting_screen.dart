@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tic_tac_toe_app/%08common/button.dart';
-import 'package:tic_tac_toe_app/%08common/font_style.dart';
+import 'package:tic_tac_toe_app/common/button.dart';
+import 'package:tic_tac_toe_app/common/enums.dart';
+import 'package:tic_tac_toe_app/common/font_style.dart';
 import 'package:tic_tac_toe_app/view/game/game_screen.dart';
 import 'package:tic_tac_toe_app/controller/game_controller.dart';
 import 'package:tic_tac_toe_app/controller/setting_controller.dart';
@@ -89,8 +90,8 @@ class SettingScreen extends GetView<SettingController> {
                     child: GetBuilder<SettingController>(
                       builder: (_) =>
                           CupertinoSlidingSegmentedControl<MarkerOpt>(
-                        thumbColor: controller.getColor(controller.color1),
-                        groupValue: controller.marker1,
+                        thumbColor: controller.colorOneSegmentValue.color,
+                        groupValue: controller.markerOneSegmentValue,
                         onValueChanged: (value) =>
                             controller.selectMarker1(value),
                         children: <MarkerOpt, Widget>{
@@ -110,7 +111,7 @@ class SettingScreen extends GetView<SettingController> {
                       borderColor: Colors.transparent,
                       selectedColor: Colors.white,
                       unselectedColor: Colors.grey,
-                      groupValue: controller.color1,
+                      groupValue: controller.colorOneSegmentValue,
                       onValueChanged: (value) => controller.selectColor1(value),
                       children: <ColorOpt, Widget>{
                         ColorOpt.blue: segmentColorWidget(Colors.indigo),
@@ -132,8 +133,8 @@ class SettingScreen extends GetView<SettingController> {
                     child: GetBuilder<SettingController>(
                       builder: (_) =>
                           CupertinoSlidingSegmentedControl<MarkerOpt>(
-                        thumbColor: controller.getColor(controller.color2),
-                        groupValue: controller.marker2,
+                        thumbColor: controller.colorTwoSegmentValue.color,
+                        groupValue: controller.markerTwoSegmentValue,
                         onValueChanged: (value) =>
                             controller.selectMarker2(value),
                         children: <MarkerOpt, Widget>{
@@ -153,7 +154,7 @@ class SettingScreen extends GetView<SettingController> {
                       borderColor: Colors.transparent,
                       selectedColor: Colors.white,
                       unselectedColor: Colors.grey,
-                      groupValue: controller.color2,
+                      groupValue: controller.colorTwoSegmentValue,
                       onValueChanged: (value) => controller.selectColor2(value),
                       children: <ColorOpt, Widget>{
                         ColorOpt.blue: segmentColorWidget(Colors.indigo),
@@ -191,10 +192,10 @@ class SettingScreen extends GetView<SettingController> {
                 color: Colors.indigo[800],
                 onPressed: () => Get.to(
                   () => GameScreen(
-                    settings: controller.getSettings(),
+                    settings: controller.getSettingModel(),
                   ),
                   binding: BindingsBuilder(() {
-                    Get.put(GameController(controller.getSettings()));
+                    Get.put(GameController(controller.getSettingModel()));
                   }),
                   transition: Transition.zoom,
                   duration: const Duration(milliseconds: 500),

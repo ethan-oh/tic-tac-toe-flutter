@@ -6,7 +6,7 @@ Widget boardBox(context, int x, int y, {IconData? icon}) {
   GameController controller = Get.find<GameController>();
   double borderWidth = 10;
   double width =
-      MediaQuery.of(context).size.width / controller.boardSize - borderWidth;
+      MediaQuery.of(context).size.width / controller.gridCount - borderWidth;
   return GestureDetector(
     onTap: () {
       bool isEmptyBox = controller.boxClickAction(x, y);

@@ -2,20 +2,66 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tic_tac_toe_app/model/setting_model.dart';
 
-enum GridOpt { threeByThree, fourByFour, fiveByFive }
-enum AlignOpt { three, four, five }
-enum MarkerOpt { circle, cross, triangle, rectangle }
-enum ColorOpt { blue, red, green, orange }
-enum TurnOpt { random, playerOne, playerTwo}
+enum GridOpt {
+  threeByThree(3),
+  fourByFour(4),
+  fiveByFive(5);
+
+  const GridOpt(this.gridCount);
+  final int gridCount;
+}
+
+enum AlignOpt {
+  three(3),
+  four(4),
+  five(5);
+
+  const AlignOpt(this.alignCount);
+  final int alignCount;
+  static AlignOpt fromInt(int value) {
+    switch (value) {
+      case 3:
+        return AlignOpt.three;
+      case 4:
+        return AlignOpt.four;
+      case 5:
+        return AlignOpt.five;
+      default:
+        throw ArgumentError("Invalid value: $value");
+    }
+  }
+}
+
+enum MarkerOpt {
+  circle(Icons.circle_outlined),
+  cross(Icons.close),
+  triangle(Icons.change_history),
+  rectangle(Icons.square_outlined);
+
+  const MarkerOpt(this.marker);
+  final IconData marker;
+}
+
+enum ColorOpt {
+  blue(Colors.indigo),
+  red(Color.fromRGBO(211, 47, 47, 1)),
+  green(Colors.green),
+  orange(Colors.orange);
+
+  const ColorOpt(this.color);
+  final Color color;
+}
+
+enum TurnOpt { random, playerOne, playerTwo }
 
 class SettingController extends GetxController {
   TurnOpt turnSegmentValue = TurnOpt.random;
   GridOpt gridSegmentValue = GridOpt.threeByThree;
   AlignOpt alignSegmentValue = AlignOpt.three;
-  MarkerOpt marker1 = MarkerOpt.cross; // Player 1의 마커 선택
-  MarkerOpt marker2 = MarkerOpt.circle; // Player 2의 마커 선택
-  ColorOpt color1 = ColorOpt.blue; // Player 2의 마커 선택
-  ColorOpt color2 = ColorOpt.red; // Player 2의 마커 선택
+  MarkerOpt markerOneSegmentValue = MarkerOpt.cross; // Player 1의 마커 선택
+  MarkerOpt markerTwoSegmentValue = MarkerOpt.circle; // Player 2의 마커 선택
+  ColorOpt colorOneSegmentValue = ColorOpt.blue; // Player 2의 마커 선택
+  ColorOpt colorTwoSegmentValue = ColorOpt.red; // Player 2의 마커 선택
 
   selectGrid(GridOpt? value) {
     if (value != null) {
@@ -44,10 +90,10 @@ class SettingController extends GetxController {
         case GridOpt.fourByFour:
           if (value != AlignOpt.five) {
             alignSegmentValue = value;
-          }else{
+          } else {
             isImpossibleCondition = true;
           }
-        break;
+          break;
         case GridOpt.fiveByFive:
           alignSegmentValue = value;
       }
@@ -57,65 +103,52 @@ class SettingController extends GetxController {
   }
 
   selectMarker1(MarkerOpt? value) {
-    if (value != null && value != marker2) {
-      marker1 = value;
+    if (value != null && value != markerTwoSegmentValue) {
+      markerOneSegmentValue = value;
     }
     update();
   }
 
   selectMarker2(MarkerOpt? value) {
-    if (value != null && value != marker1) {
-      marker2 = value;
+    if (value != null && value != markerOneSegmentValue) {
+      markerTwoSegmentValue = value;
     }
     update();
   }
 
   selectColor1(ColorOpt? value) {
-    if (value != null && value != color2) {
-      color1 = value;
+    if (value != null && value != colorTwoSegmentValue) {
+      colorOneSegmentValue = value;
     }
     update();
   }
 
   selectColor2(ColorOpt? value) {
-    if (value != null && value != color1) {
-      color2 = value;
+    if (value != null && value != colorOneSegmentValue) {
+      colorTwoSegmentValue = value;
     }
     update();
-  }
-
-  Color getColor(ColorOpt colorOpt) {
-    switch (colorOpt) {
-      case ColorOpt.blue:
-        return Colors.indigo;
-      case ColorOpt.red:
-        return Colors.red[700]!;
-      case ColorOpt.green:
-        return Colors.green;
-      case ColorOpt.orange:
-        return Colors.orange;
-    }
   }
 
   resetValues() {
     gridSegmentValue = GridOpt.threeByThree;
     alignSegmentValue = AlignOpt.three;
-    marker1 = MarkerOpt.cross; // Player 1의 마커 선택
-    marker2 = MarkerOpt.circle; // Player 2의 마커 선택
-    color1 = ColorOpt.blue;
-    color2 = ColorOpt.red;
+    markerOneSegmentValue = MarkerOpt.cross; // Player 1의 마커 선택
+    markerTwoSegmentValue = MarkerOpt.circle; // Player 2의 마커 선택
+    colorOneSegmentValue = ColorOpt.blue;
+    colorTwoSegmentValue = ColorOpt.red;
     turnSegmentValue = TurnOpt.random;
     update();
   }
 
-  SettingModel getSettings() {
+  SettingModel getSettingModel() {
     return SettingModel(
-      gridOpt: gridSegmentValue,
-      alignOpt: alignSegmentValue,
-      player1Marker: marker1,
-      player1Color: color1,
-      player2Marker: marker2,
-      player2Color: color2,
+      gridCount: gridSegmentValue.gridCount,
+      alignCount: alignSegmentValue.alignCount,
+      playerOneMarker: markerOneSegmentValue.marker,
+      playerOneColor: colorOneSegmentValue.color,
+      playerTwoMarker: markerTwoSegmentValue.marker,
+      playerTwoColor: colorTwoSegmentValue.color,
       firstPlayer: turnSegmentValue,
     );
   }

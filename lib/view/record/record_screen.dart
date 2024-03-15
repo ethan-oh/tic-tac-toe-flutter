@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tic_tac_toe_app/%08common/button.dart';
-import 'package:tic_tac_toe_app/%08common/font_style.dart';
+import 'package:tic_tac_toe_app/common/button.dart';
+import 'package:tic_tac_toe_app/common/font_style.dart';
 import 'package:tic_tac_toe_app/model/record_model.dart';
 
 class RecordScreen extends StatelessWidget {

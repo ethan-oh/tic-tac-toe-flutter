@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tic_tac_toe_app/%08common/button.dart';
+import 'package:tic_tac_toe_app/common/button.dart';
 import 'package:tic_tac_toe_app/model/setting_model.dart';
 import 'package:tic_tac_toe_app/controller/game_controller.dart';
 import 'package:tic_tac_toe_app/view/game/game_board.dart';
@@ -18,7 +18,7 @@ class GameScreen extends GetView<GameController> {
         Scaffold(
           appBar: AppBar(
             title: Text(
-              '승리조건: ${controller.winCondition}칸 완성',
+              '승리조건: ${controller.alignCount}칸 완성',
             ),
             actions: [
               HomeButton(),

@@ -3,10 +3,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tic_tac_toe_app/common/enums.dart';
 import 'package:tic_tac_toe_app/model/database_handler.dart';
 import 'package:tic_tac_toe_app/model/record_model.dart';
 import 'package:tic_tac_toe_app/model/setting_model.dart';
-import 'package:tic_tac_toe_app/controller/setting_controller.dart';
 
 enum GameStatus { playing, playerOneWin, playerTwoWin, draw }
 
@@ -23,12 +23,12 @@ class GameController extends GetxController {
   GameController(this.settings);
 
   // setting model을 통해 받아온 설정값을 변수에 저장
-  late final IconData playerOneMarker = _getPlayerMarker(isPlayerOne: true);
-  late final IconData playerTwoMarker = _getPlayerMarker(isPlayerOne: false);
-  late final Color playerOneColor = _getPlayerMarkerColor(true);
-  late final Color playerTwoColor = _getPlayerMarkerColor(false);
-  late final int boardSize = _getBoardSize();
-  late final int winCondition = _getWinCondition();
+  late final IconData playerOneMarker = settings.playerOneMarker;
+  late final IconData playerTwoMarker = settings.playerTwoMarker;
+  late final Color playerOneColor = settings.playerOneColor;
+  late final Color playerTwoColor = settings.playerTwoColor;
+  late final int gridCount = settings.gridCount;
+  late final int alignCount = settings.alignCount;
   // 2차원 Icon 리스트
   late List<List<IconData>> iconList;
   // 게임 턴 확인
@@ -76,23 +76,22 @@ class GameController extends GetxController {
     gameStatus = GameStatus.playing;
     index = 0;
     result = '';
-    _iconListInit(settings.gridOpt);
+    _iconListInit();
     recordDataInit();
   }
 
   void recordDataInit() {
     recordData = {};
-    for (int i = 1; i <= boardSize; i++) {
-      for (int j = 1; j <= boardSize; j++) {
+    for (int i = 1; i <= gridCount; i++) {
+      for (int j = 1; j <= gridCount; j++) {
         recordData['($i,$j)'] = 0;
       }
     }
   }
 
-  void _iconListInit(GridOpt gridOpt) {
-    int count = _getBoardSize();
+  void _iconListInit() {
     iconList = List.generate(
-        count, (index) => List.generate(count, ((index) => Icons.abc)));
+        gridCount, (index) => List.generate(gridCount, ((index) => Icons.abc)));
   }
 
   bool setFirstPlayer() {
@@ -103,55 +102,6 @@ class GameController extends GetxController {
             : Random().nextInt(2) == 1
                 ? true
                 : false;
-  }
-
-  int _getBoardSize() {
-    return (settings.gridOpt == GridOpt.threeByThree)
-        ? 3
-        : (settings.gridOpt == GridOpt.fourByFour)
-            ? 4
-            : 5;
-  }
-
-  int _getWinCondition() {
-    return (settings.alignOpt == AlignOpt.three)
-        ? 3
-        : (settings.alignOpt == AlignOpt.four)
-            ? 4
-            : 5;
-  }
-
-  IconData _getPlayerMarker({required bool isPlayerOne}) {
-    IconData marker = Icons.abc;
-
-    switch (isPlayerOne ? settings.player1Marker : settings.player2Marker) {
-      case MarkerOpt.circle:
-        marker = Icons.circle_outlined;
-      case MarkerOpt.cross:
-        marker = Icons.close;
-      case MarkerOpt.triangle:
-        marker = Icons.change_history;
-      case MarkerOpt.rectangle:
-        marker = Icons.square_outlined;
-    }
-    return marker;
-  }
-
-  Color _getPlayerMarkerColor(bool isPlayerOne) {
-    Color color = Colors.transparent;
-    switch (isPlayerOne ? settings.player1Color : settings.player2Color) {
-      case ColorOpt.blue:
-        color = Colors.indigo;
-
-      case ColorOpt.red:
-        color = Colors.red[700]!;
-      case ColorOpt.green:
-        color = Colors.green;
-      case ColorOpt.orange:
-        color = Colors.orange;
-    }
-
-    return color;
   }
 
   // 무르기 기능을 위한 마지막 놓은 좌표 저장
@@ -256,11 +206,11 @@ class GameController extends GetxController {
   ////////////////////////// 승리 체크 ////////////////////////////////
   void _gameCheck() {
     // 승리 체크
-    if (_isConsecutive(iconList, playerOneMarker, winCondition)) {
+    if (_isConsecutive(iconList, playerOneMarker, alignCount)) {
       gameStatus = GameStatus.playerOneWin;
       resultMessage = 'Player 1 Win';
       result = 'Player 1 승리';
-    } else if (_isConsecutive(iconList, playerTwoMarker, winCondition)) {
+    } else if (_isConsecutive(iconList, playerTwoMarker, alignCount)) {
       gameStatus = GameStatus.playerTwoWin;
       resultMessage = 'Player 2 Win';
       result = 'Player 2 승리';
@@ -391,8 +341,8 @@ class GameController extends GetxController {
 
   // 빈 칸 체크
   bool _isAnyEmptyBox(List<List<IconData>> board) {
-    for (int i = 0; i < boardSize; i++) {
-      for (int j = 0; j < boardSize; j++) {
+    for (int i = 0; i < gridCount; i++) {
+      for (int j = 0; j < gridCount; j++) {
         if (board[i][j] == Icons.abc) {
           return true;
         }
@@ -405,19 +355,18 @@ class GameController extends GetxController {
   Future<void> saveRecord() async {
     DatabaseHandler handler = DatabaseHandler();
     RecordModel record = RecordModel(
-      boardSize: boardSize,
-      recordData: jsonEncode(recordData),
-      playerOneIconCode: RecordModel.getPlayerIconCode(playerOneMarker),
-      playerTwoIconCode: RecordModel.getPlayerIconCode(playerTwoMarker),
-      playerOneColorIndex: RecordModel.getPlayerColorIndex(playerOneColor),
-      playerTwoColorIndex: RecordModel.getPlayerColorIndex(playerTwoColor),
-      isPlayerOneStartFirst: isPlayerOneStartFirst ? 1 : 0,
-      align: winCondition,
-      playerOneRemainBackies: playerOneBackCount,
-      playerTwoRemainBackies: playerTwoBackCount,
-      dateTime: DateTime.now().toString(),
-      result: result
-    );
+        boardSize: gridCount,
+        recordData: jsonEncode(recordData),
+        playerOneIconCode: RecordModel.getPlayerIconCode(playerOneMarker),
+        playerTwoIconCode: RecordModel.getPlayerIconCode(playerTwoMarker),
+        playerOneColorIndex: RecordModel.getPlayerColorIndex(playerOneColor),
+        playerTwoColorIndex: RecordModel.getPlayerColorIndex(playerTwoColor),
+        isPlayerOneStartFirst: isPlayerOneStartFirst ? 1 : 0,
+        align: alignCount,
+        playerOneRemainBackies: playerOneBackCount,
+        playerTwoRemainBackies: playerTwoBackCount,
+        dateTime: DateTime.now().toString(),
+        result: result);
 
     await handler.insertRecord(record);
   }

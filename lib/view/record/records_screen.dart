@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
-import 'package:tic_tac_toe_app/%08common/font_style.dart';
+import 'package:tic_tac_toe_app/common/font_style.dart';
 import 'package:tic_tac_toe_app/controller/records_controller.dart';
 import 'package:tic_tac_toe_app/model/record_model.dart';
 import 'package:tic_tac_toe_app/view/record/record_screen.dart';
@@ -19,14 +19,18 @@ class RecordsScreen extends GetView<RecordsController> {
       body: Center(
         child: GetBuilder<RecordsController>(
           builder: (controller) => controller.records.isEmpty
-              ? const Center(
-                  child: Text(
-                    '저장된 게임이 없습니다.',
-                    style: AppStyle.normalTextStyle,
-                  ),
-                )
+              ? emptyRecord()
               : makeRecordList(controller),
         ),
+      ),
+    );
+  }
+
+  Center emptyRecord() {
+    return const Center(
+      child: Text(
+        '저장된 게임이 없습니다.',
+        style: AppStyle.normalTextStyle,
       ),
     );
   }
@@ -88,8 +92,8 @@ Widget recordCard(context, RecordModel record) {
         children: [
           Container(
             margin: EdgeInsets.all(15.w),
-            decoration:
-                BoxDecoration(border: Border.all(color: Colors.black, width: 1)),
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.black, width: 1)),
             width: 100.w,
             height: 100.w,
             child: resultGameBoard(

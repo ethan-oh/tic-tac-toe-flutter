@@ -1,21 +1,22 @@
-import 'package:tic_tac_toe_app/controller/setting_controller.dart';
+import 'package:flutter/material.dart';
+import 'package:tic_tac_toe_app/common/enums.dart';
 
 class SettingModel {
-  final GridOpt gridOpt;
-  final AlignOpt alignOpt;
-  final MarkerOpt player1Marker;
-  final ColorOpt player1Color;
-  final MarkerOpt player2Marker;
-  final ColorOpt player2Color;
+  final int gridCount;
+  final int alignCount;
+  final IconData playerOneMarker;
+  final Color playerOneColor;
+  final IconData playerTwoMarker;
+  final Color playerTwoColor;
   final TurnOpt firstPlayer;
 
   SettingModel({
-    required this.gridOpt,
-    required this.alignOpt,
-    required this.player1Marker,
-    required this.player1Color,
-    required this.player2Marker,
-    required this.player2Color,
+    required this.gridCount,
+    required this.alignCount,
+    required this.playerOneMarker,
+    required this.playerOneColor,
+    required this.playerTwoMarker,
+    required this.playerTwoColor,
     required this.firstPlayer,
   });
 }
