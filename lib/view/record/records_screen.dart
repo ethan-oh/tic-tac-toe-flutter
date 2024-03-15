@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
@@ -106,22 +108,26 @@ Widget recordCard(context, RecordModel record) {
             isSmall: true,
           ),
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              record.result,
-              style: AppStyle.normalTextStyle,
-            ),
-            Text(
-              '조건 : ${record.align.toString()}칸 완성',
-              style: AppStyle.dateTimeTextStyle,
-            ),
-            Text(
-              record.dateTime,
-              style: AppStyle.dateTimeTextStyle,
-            ),
-          ],
+        SizedBox(
+          height: 100.h,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                record.result,
+                style: AppStyle.normalTextStyle,
+              ),
+              Text(
+                '조건 : ${record.align.toString()}칸 완성',
+                style: AppStyle.dateTimeTextStyle,
+              ),
+              Text(
+                record.dateTime,
+                style: AppStyle.dateTimeTextStyle,
+              ),
+            ],
+          ),
         ),
       ],
     ),
