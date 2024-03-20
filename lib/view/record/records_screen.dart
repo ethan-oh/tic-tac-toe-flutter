@@ -12,10 +12,10 @@ class RecordsScreen extends GetView<RecordsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey,
+      // backgroundColor: Colors.blueGrey,
       appBar: AppBar(
         title: const Text('기록 보기'),
-        backgroundColor: Colors.blueGrey,
+        // backgroundColor: Colors.blueGrey,
         actions: [
           _deleteAllButton(),
         ],
@@ -73,7 +73,8 @@ class RecordsScreen extends GetView<RecordsController> {
             () => RecordScreen(
               recordModel: controller.records[index],
             ),
-            transition: Transition.noTransition,
+            fullscreenDialog: true,
+            // transition: Transition.cupertino,
             duration: const Duration(seconds: 1),
           ),
           child: Slidable(
@@ -83,7 +84,7 @@ class RecordsScreen extends GetView<RecordsController> {
               children: [
                 SlidableAction(
                   borderRadius: BorderRadius.circular(10),
-                  backgroundColor: Colors.red,
+                  backgroundColor: Colors.red[900]!,
                   icon: Icons.delete,
                   label: '삭제',
                   onPressed: (context) {
