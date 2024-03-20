@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:tic_tac_toe_app/common/enums.dart';
 import 'package:tic_tac_toe_app/model/setting_model.dart';
 
-
 class SettingController extends GetxController {
   TurnOpt turnSegmentValue = TurnOpt.random;
   GridOpt gridSegmentValue = GridOpt.threeByThree;
@@ -51,32 +50,40 @@ class SettingController extends GetxController {
     return isImpossibleCondition;
   }
 
-  selectMarker1(MarkerOpt? value) {
-    if (value != null && value != markerTwoSegmentValue) {
-      markerOneSegmentValue = value;
+  bool selectMarker({required MarkerOpt? value, required bool isFirstMarker}) {
+    bool isImpossibleCondition = false;
+    if (value != null) {
+      if ((isFirstMarker && value != markerTwoSegmentValue) ||
+          (!isFirstMarker && value != markerOneSegmentValue)) {
+        if (isFirstMarker) {
+          markerOneSegmentValue = value;
+        } else {
+          markerTwoSegmentValue = value;
+        }
+      } else {
+        isImpossibleCondition = true;
+      }
+      update();
     }
-    update();
+    return isImpossibleCondition;
   }
 
-  selectMarker2(MarkerOpt? value) {
-    if (value != null && value != markerOneSegmentValue) {
-      markerTwoSegmentValue = value;
+  bool selectColor({required ColorOpt? value, required bool isFirstColor}) {
+    bool isImpossibleCondition = false;
+    if (value != null) {
+      if ((isFirstColor && value != colorTwoSegmentValue) ||
+          (!isFirstColor && value != colorOneSegmentValue)) {
+        if (isFirstColor) {
+          colorOneSegmentValue = value;
+        } else {
+          colorTwoSegmentValue = value;
+        }
+      } else {
+        isImpossibleCondition = true;
+      }
+      update();
     }
-    update();
-  }
-
-  selectColor1(ColorOpt? value) {
-    if (value != null && value != colorTwoSegmentValue) {
-      colorOneSegmentValue = value;
-    }
-    update();
-  }
-
-  selectColor2(ColorOpt? value) {
-    if (value != null && value != colorOneSegmentValue) {
-      colorTwoSegmentValue = value;
-    }
-    update();
+    return isImpossibleCondition;
   }
 
   resetValues() {

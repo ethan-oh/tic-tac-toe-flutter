@@ -7,6 +7,7 @@ import 'package:tic_tac_toe_app/view/game/game_screen.dart';
 import 'package:tic_tac_toe_app/controller/game_controller.dart';
 import 'package:tic_tac_toe_app/controller/setting_controller.dart';
 import 'package:tic_tac_toe_app/view/setting/segment_widgets.dart';
+import 'package:tic_tac_toe_app/widget/error_snackbar.dart';
 import 'package:tic_tac_toe_app/widget/simple_button.dart';
 
 class SettingScreen extends GetView<SettingController> {
@@ -31,8 +32,8 @@ class SettingScreen extends GetView<SettingController> {
             children: [
               _gridSetting(),
               _alignSetting(),
-              _playerOneSetting(),
-              _playerTwoSetting(),
+              _markerSetting(isPlayerOne: true),
+              _markerSetting(isPlayerOne: false),
               _turnSetting(),
               _startButton(),
             ],
@@ -82,63 +83,65 @@ class SettingScreen extends GetView<SettingController> {
     );
   }
 
-  Column _playerTwoSetting() {
+  Column _markerSetting({required bool isPlayerOne}) {
     return Column(
       children: [
-        _settingTitle('Player 2 마커'),
+        _settingTitle('Player ${isPlayerOne ? '1' : '2'} 마커'),
         GetBuilder<SettingController>(
           builder: (_) => CupertinoSlidingSegmentedControl<MarkerOpt>(
-            thumbColor: controller.colorTwoSegmentValue.color,
-            groupValue: controller.markerTwoSegmentValue,
-            onValueChanged: (value) => controller.selectMarker2(value),
+            thumbColor: isPlayerOne
+                ? controller.colorOneSegmentValue.color
+                : controller.colorTwoSegmentValue.color,
+            groupValue: isPlayerOne
+                ? controller.markerOneSegmentValue
+                : controller.markerTwoSegmentValue,
+            onValueChanged: (value) {
+              bool isImpossible = isPlayerOne
+                  ? controller.selectMarker(
+                      value: value,
+                      isFirstMarker: true,
+                    )
+                  : controller.selectMarker(
+                      value: value,
+                      isFirstMarker: false,
+                    );
+              if (isImpossible) {
+                errorSnackBar(
+                  title: '불가능',
+                  message: '상대방과 동일한 마커는 선택 불가능합니다.',
+                );
+              }
+            },
             children: <MarkerOpt, Widget>{
               MarkerOpt.cross: iconSegmentWidget(Icons.close),
               MarkerOpt.circle: iconSegmentWidget(Icons.circle_outlined),
               MarkerOpt.triangle: iconSegmentWidget(Icons.change_history),
-              MarkerOpt.rectangle:
-                  iconSegmentWidget(Icons.square_outlined),
+              MarkerOpt.rectangle: iconSegmentWidget(Icons.square_outlined),
             },
           ),
         ),
         GetBuilder<SettingController>(
           builder: (_) => CupertinoSlidingSegmentedControl<ColorOpt>(
-            groupValue: controller.colorTwoSegmentValue,
-            onValueChanged: (value) => controller.selectColor2(value),
-            children: <ColorOpt, Widget>{
-              ColorOpt.blue: colorSegmentWidget(Colors.indigo),
-              ColorOpt.red: colorSegmentWidget(Colors.red[700]!),
-              ColorOpt.green: colorSegmentWidget(Colors.green),
-              ColorOpt.orange: colorSegmentWidget(Colors.orange),
+            groupValue: isPlayerOne
+                ? controller.colorOneSegmentValue
+                : controller.colorTwoSegmentValue,
+            onValueChanged: (value) {
+              bool isImpossible = isPlayerOne
+                  ? controller.selectColor(
+                      value: value,
+                      isFirstColor: true,
+                    )
+                  : controller.selectColor(
+                      value: value,
+                      isFirstColor: false,
+                    );
+              if (isImpossible) {
+                errorSnackBar(
+                  title: '불가능',
+                  message: '상대방과 동일한 색상은 선택 불가능합니다.',
+                );
+              }
             },
-          ),
-        ),
-      ],
-    );
-  }
-
-  Column _playerOneSetting() {
-    return Column(
-      children: [
-        _settingTitle('Player 1 마커'),
-        GetBuilder<SettingController>(
-          builder: (_) => CupertinoSlidingSegmentedControl<MarkerOpt>(
-            thumbColor: controller.colorOneSegmentValue.color,
-            groupValue: controller.markerOneSegmentValue,
-            onValueChanged: (value) => controller.selectMarker1(value),
-            children: <MarkerOpt, Widget>{
-              MarkerOpt.cross: iconSegmentWidget(Icons.close),
-              MarkerOpt.circle: iconSegmentWidget(Icons.circle_outlined),
-              MarkerOpt.triangle: iconSegmentWidget(Icons.change_history),
-              MarkerOpt.rectangle:
-                  iconSegmentWidget(Icons.square_outlined),
-            },
-          ),
-        ),
-        GetBuilder<SettingController>(
-          builder: (_) => CupertinoSlidingSegmentedControl<ColorOpt>(
-            
-            groupValue: controller.colorOneSegmentValue,
-            onValueChanged: (value) => controller.selectColor1(value),
             children: <ColorOpt, Widget>{
               ColorOpt.blue: colorSegmentWidget(Colors.indigo),
               ColorOpt.red: colorSegmentWidget(const Color(0xFFD32F2F)),
