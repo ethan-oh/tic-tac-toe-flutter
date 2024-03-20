@@ -56,4 +56,11 @@ class DatabaseHandler {
       [id], // []안의 값이 ?값
     );
   }
+
+  Future<void> deleteAllRecord() async {
+    final Database db = await initializeDB();
+    await db.rawDelete(
+      'delete from records',
+    );
+  }
 } // End

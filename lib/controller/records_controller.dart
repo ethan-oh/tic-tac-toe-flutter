@@ -34,4 +34,9 @@ class RecordsController extends GetxController {
     await handler.deleteRecord(id);
     queryAllRecords();
   }
+
+  Future<void> deleteAllRecord() async {
+    await handler.deleteAllRecord();
+    queryAllRecords();
+  }
 }
