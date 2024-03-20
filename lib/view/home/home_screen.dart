@@ -1,12 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tic_tac_toe_app/common/button.dart';
+import 'package:tic_tac_toe_app/common/animation_state.dart';
 import 'package:tic_tac_toe_app/controller/records_controller.dart';
 import 'package:tic_tac_toe_app/view/record/records_screen.dart';
 import 'package:tic_tac_toe_app/view/setting/setting_screen.dart';
 import 'package:tic_tac_toe_app/controller/setting_controller.dart';
-import 'package:tic_tac_toe_app/common/error_snackbar.dart';
+import 'package:tic_tac_toe_app/widget/error_snackbar.dart';
+import 'package:tic_tac_toe_app/widget/simple_button.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -17,14 +18,15 @@ class HomeScreen extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              const Spacer(),
-              logoImageBox(),
-              const Spacer(),
-              startButton(),
-              recordButton(),
-              const Spacer(),
+              logoImage(),
+              Column(
+                children: [
+                  _startButton(),
+                  _recordButton(),
+                ],
+              ),
             ],
           ),
         ),
@@ -32,7 +34,22 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  SimpleButton recordButton() {
+  AnimationState logoImage() {
+    return AnimationState(
+      builder: (state) => AnimatedScale(
+        curve: Curves.linear,
+        duration: const Duration(milliseconds: 1000),
+        scale: state ? 1 : 0.95,
+        child: Image.asset(
+          'assets/images/game_logo.png',
+          width: 300,
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+
+  SimpleButton _recordButton() {
     return SimpleButton(
       title: '기록 보기',
       width: 300,
@@ -56,7 +73,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  SimpleButton startButton() {
+  SimpleButton _startButton() {
     return SimpleButton(
       title: '시작하기',
       width: 300,
@@ -70,14 +87,6 @@ class HomeScreen extends StatelessWidget {
           },
         ),
       ),
-    );
-  }
-
-  Image logoImageBox() {
-    return Image.asset(
-      'assets/images/game_logo.png',
-      width: 300,
-      fit: BoxFit.cover,
     );
   }
 }

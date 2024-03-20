@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tic_tac_toe_app/common/button.dart';
 import 'package:tic_tac_toe_app/common/font_style.dart';
 import 'package:tic_tac_toe_app/controller/game_controller.dart';
 import 'package:tic_tac_toe_app/view/home/home_screen.dart';
-import 'package:tic_tac_toe_app/common/error_snackbar.dart';
+import 'package:tic_tac_toe_app/widget/error_snackbar.dart';
+import 'package:tic_tac_toe_app/widget/simple_button.dart';
 
 class MenuScreen extends GetView<GameController> {
   const MenuScreen({super.key});

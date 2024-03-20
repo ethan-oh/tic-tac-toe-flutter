@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tic_tac_toe_app/common/error_snackbar.dart';
+import 'package:tic_tac_toe_app/widget/error_snackbar.dart';
 import 'package:tic_tac_toe_app/controller/game_controller.dart';
 
 Widget boardBox(context, int x, int y, {IconData? icon}) {

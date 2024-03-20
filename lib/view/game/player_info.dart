@@ -6,9 +6,9 @@ import 'package:tic_tac_toe_app/common/font_style.dart';
 Widget playerOneInfo({required Color color}) {
   GameController controller = Get.find<GameController>();
   return Container(
-    width: 170,
+    width: Get.width / 2,
+    margin: const EdgeInsets.only(top: 10, bottom: 30),
     padding: const EdgeInsets.symmetric(vertical: 10),
-    margin: const EdgeInsets.all(10),
     color: color,
     child: Column(
       children: [
@@ -38,9 +38,9 @@ Widget playerOneInfo({required Color color}) {
 Widget playerTwoInfo({required Color color}) {
   GameController controller = Get.find<GameController>();
   return Container(
-    width: 170,
+    width: Get.width / 2,
+    margin: const EdgeInsets.only(top: 10, bottom: 30),
     padding: const EdgeInsets.symmetric(vertical: 10),
-    margin: const EdgeInsets.all(10),
     color: color,
     child: Column(
       children: [

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tic_tac_toe_app/common/button.dart';
+import 'package:tic_tac_toe_app/widget/home_button.dart';
 import 'package:tic_tac_toe_app/model/setting_model.dart';
 import 'package:tic_tac_toe_app/controller/game_controller.dart';
 import 'package:tic_tac_toe_app/view/game/game_board.dart';
@@ -20,43 +20,43 @@ class GameScreen extends GetView<GameController> {
             title: Text(
               '승리조건: ${controller.alignCount}칸 완성',
             ),
-            actions: [
+            actions: const [
               HomeButton(),
             ],
           ),
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                GetBuilder<GameController>(
-                  builder: (_) => Container(
-                    constraints: const BoxConstraints(maxWidth: 600),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        playerOneInfo(
-                          color: controller.isPlayerOneTurn
-                              ? Colors.white
-                              : Colors.transparent,
-                        ),
-                        playerTwoInfo(
-                          color: controller.isPlayerOneTurn
-                              ? Colors.transparent
-                              : Colors.white,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                GetBuilder<GameController>(
-                  builder: (_) => gameGridBoard(context),
-                ),
-              ],
-            ),
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              _gameInfo(),
+              _board(context),
+            ],
           ),
         ),
         const MenuScreen(),
       ],
+    );
+  }
+
+  GetBuilder<GameController> _board(BuildContext context) {
+    return GetBuilder<GameController>(
+      builder: (_) => gameGridBoard(context),
+    );
+  }
+
+  GetBuilder<GameController> _gameInfo() {
+    return GetBuilder<GameController>(
+      builder: (_) => Row(
+        children: [
+          playerOneInfo(
+            color:
+                controller.isPlayerOneTurn ? Colors.white : Colors.transparent,
+          ),
+          playerTwoInfo(
+            color:
+                controller.isPlayerOneTurn ? Colors.transparent : Colors.white,
+          ),
+        ],
+      ),
     );
   }
 }
