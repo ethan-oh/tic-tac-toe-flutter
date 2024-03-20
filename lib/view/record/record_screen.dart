@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tic_tac_toe_app/view/record/result_board.dart';
 import 'package:tic_tac_toe_app/widget/home_button.dart';
@@ -21,28 +20,41 @@ class RecordScreen extends StatelessWidget {
           HomeButton(),
         ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(
-              '승리조건 : ${recordModel.align}칸 완성',
-              style: AppStyle.smallTextStyle,
-            ),
-            Row(
-              children: [
-                _playerResultInfo(playerOne: true),
-                _playerResultInfo(playerOne: false),
-              ],
-            ),
-            Hero(
-              tag: recordModel.id!,
-              child: _board(context),
-            ),
-          ],
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(
+            '승리조건 : ${recordModel.align}칸 완성',
+            style: AppStyle.smallTextStyle,
+          ),
+          Row(
+            children: [
+              _playerResultInfo(playerOne: true),
+              _playerResultInfo(playerOne: false),
+            ],
+          ),
+          _winner(),
+          Hero(
+            tag: 'board_${recordModel.id!}',
+            child: _board(context),
+          ),
+        ],
       ),
     );
+  }
+
+  Padding _winner() {
+    return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Hero(
+            tag: 'winner_${recordModel.id!}',
+            child: Material(
+              type: MaterialType.transparency,
+              child:
+                  Text(recordModel.result, style: AppStyle.normalTextStyle),
+            ),
+          ),
+        );
   }
 
   Padding _board(BuildContext context) {

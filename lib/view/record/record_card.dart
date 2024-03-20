@@ -27,7 +27,7 @@ class RecordCard extends StatelessWidget {
             width: 100.w,
             height: 100.w,
             child: Hero(
-              tag: recordModel.id!,
+              tag: 'board_${recordModel.id!}',
               child: ResultBoard(
                 context,
                 boardSize: recordModel.boardSize,
@@ -42,9 +42,15 @@ class RecordCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  recordModel.result,
-                  style: AppStyle.normalTextStyle,
+                Hero(
+                  tag: 'winner_${recordModel.id!}',
+                  child: Material(
+                    type: MaterialType.transparency,
+                    child: Text(
+                      recordModel.result,
+                      style: AppStyle.normalTextStyle,
+                    ),
+                  ),
                 ),
                 Text(
                   '조건 : ${recordModel.align.toString()}칸 완성',

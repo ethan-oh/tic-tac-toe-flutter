@@ -16,12 +16,40 @@ class RecordsScreen extends GetView<RecordsController> {
       appBar: AppBar(
         title: const Text('기록 보기'),
         backgroundColor: Colors.blueGrey,
+        actions: [
+          _deleteAllButton(),
+        ],
       ),
       body: Center(
         child: GetBuilder<RecordsController>(
           builder: (controller) => controller.records.isEmpty
               ? emptyRecord()
               : makeRecordList(controller),
+        ),
+      ),
+    );
+  }
+  // scafold
+
+  Padding _deleteAllButton() {
+    return Padding(
+      padding: const EdgeInsets.only(right: 10),
+      child: IconButton(
+        onPressed: () => Get.defaultDialog(
+            title: "삭제",
+            middleText: "기록을 모두 삭제하시겠습니까?",
+            buttonColor: Colors.blue,
+            backgroundColor: Colors.white,
+            confirmTextColor: Colors.white,
+            textConfirm: "확인",
+            onConfirm: () =>
+                controller.deleteAllRecord().then((value) => Get.back()),
+            textCancel: "취소",
+            onCancel: () {}),
+        icon: Icon(
+          Icons.delete,
+          size: 35,
+          color: Colors.red[900],
         ),
       ),
     );
@@ -49,26 +77,18 @@ class RecordsScreen extends GetView<RecordsController> {
             duration: const Duration(seconds: 1),
           ),
           child: Slidable(
-            key: ValueKey(index), // onDismissed를 위해
             closeOnScroll: true,
             endActionPane: ActionPane(
               motion: const DrawerMotion(),
-              dismissible: DismissiblePane(
-                // 끝까지 당기면 바로 액션함
-                onDismissed: () async {
-                  int id = controller.records[index].id!;
-                  await controller.deleteRecord(id);
-                },
-              ),
               children: [
                 SlidableAction(
                   borderRadius: BorderRadius.circular(10),
                   backgroundColor: Colors.red,
                   icon: Icons.delete,
                   label: '삭제',
-                  onPressed: (context) async {
+                  onPressed: (context) {
                     int id = controller.records[index].id!;
-                    await controller.deleteRecord(id);
+                    controller.deleteRecord(id);
                   },
                 ),
               ],
