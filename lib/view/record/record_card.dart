@@ -21,9 +21,6 @@ class RecordCard extends StatelessWidget {
         children: [
           Container(
             margin: EdgeInsets.all(15.w),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.black, width: 1),
-            ),
             width: 100.w,
             height: 100.w,
             child: Hero(
@@ -42,14 +39,11 @@ class RecordCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Hero(
-                  tag: 'winner_${recordModel.id!}',
-                  child: Material(
-                    type: MaterialType.transparency,
-                    child: Text(
-                      recordModel.result,
-                      style: AppStyle.normalTextStyle,
-                    ),
+                Material(
+                  type: MaterialType.transparency,
+                  child: Text(
+                    recordModel.result,
+                    style: AppStyle.normalTextStyle,
                   ),
                 ),
                 Text(

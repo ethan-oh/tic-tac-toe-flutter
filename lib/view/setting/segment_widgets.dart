@@ -1,8 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 Widget segmentWidget(String option, {double? width}) {
   return Container(
-    width: double.maxFinite,
+    width: kIsWeb ? 200 : double.maxFinite,
     padding: const EdgeInsets.symmetric(vertical: 10),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -21,7 +22,7 @@ Widget segmentWidget(String option, {double? width}) {
 
 Widget iconSegmentWidget(IconData iconData, {Color? color}) {
   return Container(
-    width: double.maxFinite,
+    width: kIsWeb ? 200 * 3 / 4 : double.maxFinite,
     padding: const EdgeInsets.symmetric(vertical: 5,),
     child: Icon(
       iconData,
@@ -34,7 +35,7 @@ Widget iconSegmentWidget(IconData iconData, {Color? color}) {
 
 Widget colorSegmentWidget(Color color) {
   return Container(
-    width: double.maxFinite,
+    width: kIsWeb ? 200 * 3 / 4 : double.maxFinite,
     padding: const EdgeInsets.symmetric(vertical: 5),
     child: Icon(
       Icons.rectangle,

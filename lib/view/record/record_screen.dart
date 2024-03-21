@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tic_tac_toe_app/view/record/result_board.dart';
-import 'package:tic_tac_toe_app/widget/home_button.dart';
+import 'package:tic_tac_toe_app/common/home_button.dart';
 import 'package:tic_tac_toe_app/common/font_style.dart';
 import 'package:tic_tac_toe_app/model/record_model.dart';
 
@@ -46,13 +46,10 @@ class RecordScreen extends StatelessWidget {
   Padding _winner() {
     return Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Hero(
-            tag: 'winner_${recordModel.id!}',
-            child: Material(
-              type: MaterialType.transparency,
-              child:
-                  Text(recordModel.result, style: AppStyle.normalTextStyle),
-            ),
+          child: Material(
+            type: MaterialType.transparency,
+            child:
+                Text(recordModel.result, style: AppStyle.normalTextStyle),
           ),
         );
   }

@@ -7,8 +7,8 @@ import 'package:tic_tac_toe_app/view/game/game_screen.dart';
 import 'package:tic_tac_toe_app/controller/game_controller.dart';
 import 'package:tic_tac_toe_app/controller/setting_controller.dart';
 import 'package:tic_tac_toe_app/view/setting/segment_widgets.dart';
-import 'package:tic_tac_toe_app/widget/error_snackbar.dart';
-import 'package:tic_tac_toe_app/widget/simple_button.dart';
+import 'package:tic_tac_toe_app/common/error_snackbar.dart';
+import 'package:tic_tac_toe_app/common/simple_button.dart';
 
 class SettingScreen extends GetView<SettingController> {
   const SettingScreen({super.key});
@@ -27,16 +27,18 @@ class SettingScreen extends GetView<SettingController> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _gridSetting(),
-              _alignSetting(),
-              _markerSetting(isPlayerOne: true),
-              _markerSetting(isPlayerOne: false),
-              _turnSetting(),
-              _startButton(),
-            ],
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _gridSetting(),
+                _alignSetting(),
+                _markerSetting(isPlayerOne: true),
+                _markerSetting(isPlayerOne: false),
+                _turnSetting(),
+                _startButton(),
+              ],
+            ),
           ),
         ),
       ),

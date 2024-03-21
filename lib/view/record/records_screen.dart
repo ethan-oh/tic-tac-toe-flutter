@@ -68,31 +68,30 @@ class RecordsScreen extends GetView<RecordsController> {
     return ListView.builder(
       itemCount: controller.records.length,
       itemBuilder: (context, index) {
-        return GestureDetector(
-          onTap: () => Get.to(
-            () => RecordScreen(
-              recordModel: controller.records[index],
-            ),
-            fullscreenDialog: true,
-            // transition: Transition.cupertino,
-            duration: const Duration(seconds: 1),
+        return Slidable(
+          closeOnScroll: true,
+          endActionPane: ActionPane(
+            motion: const DrawerMotion(),
+            children: [
+              SlidableAction(
+                borderRadius: BorderRadius.circular(10),
+                backgroundColor: Colors.red[900]!,
+                icon: Icons.delete,
+                label: '삭제',
+                onPressed: (context) {
+                  int id = controller.records[index].id!;
+                  controller.deleteRecord(id);
+                },
+              ),
+            ],
           ),
-          child: Slidable(
-            closeOnScroll: true,
-            endActionPane: ActionPane(
-              motion: const DrawerMotion(),
-              children: [
-                SlidableAction(
-                  borderRadius: BorderRadius.circular(10),
-                  backgroundColor: Colors.red[900]!,
-                  icon: Icons.delete,
-                  label: '삭제',
-                  onPressed: (context) {
-                    int id = controller.records[index].id!;
-                    controller.deleteRecord(id);
-                  },
-                ),
-              ],
+          child: GestureDetector(
+            onTap: () => Get.to(
+              () => RecordScreen(
+                recordModel: controller.records[index],
+              ),
+              fullscreenDialog: true,
+              duration: const Duration(seconds: 1),
             ),
             child: RecordCard(
               context,

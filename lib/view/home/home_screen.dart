@@ -6,8 +6,8 @@ import 'package:tic_tac_toe_app/controller/records_controller.dart';
 import 'package:tic_tac_toe_app/view/record/records_screen.dart';
 import 'package:tic_tac_toe_app/view/setting/setting_screen.dart';
 import 'package:tic_tac_toe_app/controller/setting_controller.dart';
-import 'package:tic_tac_toe_app/widget/error_snackbar.dart';
-import 'package:tic_tac_toe_app/widget/simple_button.dart';
+import 'package:tic_tac_toe_app/common/error_snackbar.dart';
+import 'package:tic_tac_toe_app/common/simple_button.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
