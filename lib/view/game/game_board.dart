@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tic_tac_toe_app/controller/game_controller.dart';
 import 'package:tic_tac_toe_app/view/game/board_box.dart';
@@ -6,7 +8,7 @@ import 'package:tic_tac_toe_app/view/game/board_box.dart';
 Widget gameGridBoard(context) {
   GameController controller = Get.find<GameController>();
   int gridCount = controller.gridCount;
-  double width = MediaQuery.of(context).size.width;
+  // double width = MediaQuery.of(context).size.width;
   List<Widget> boxList = [];
   for (int i = 1; i <= controller.gridCount; i++) {
     for (int j = 1; j <= controller.gridCount; j++) {
@@ -16,7 +18,8 @@ Widget gameGridBoard(context) {
     }
   }
   return SizedBox(
-    width: width > 600 ? (600 + controller.gridCount.toDouble() * 10) : width,
+    width: (kIsWeb) ? 600 : null,
+    height: (kIsWeb) ? 600 : null,
     child: GridView(
       shrinkWrap: true,
       padding: const EdgeInsets.symmetric(horizontal: 5),

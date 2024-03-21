@@ -8,7 +8,7 @@ import 'package:tic_tac_toe_app/model/database_handler.dart';
 import 'package:tic_tac_toe_app/model/record_model.dart';
 import 'package:tic_tac_toe_app/model/setting_model.dart';
 
-enum GameStatus { playing, playerOneWin, playerTwoWin, draw }
+enum GameStatus { playing, playerOneWin, playerTwoWin, draw, pause, end }
 
 class GameController extends GetxController {
   final SettingModel settings;
@@ -76,6 +76,7 @@ class GameController extends GetxController {
     gameStatus = GameStatus.playing;
     index = 0;
     result = '';
+    resultMessage = '경기중';
     _iconListInit(); // 이중 아이콘 배열 Icons.abc로 초기화
     _recordDataInit(); // 순서 저장할 map 초기화
   }
@@ -378,5 +379,38 @@ class GameController extends GetxController {
         result: result);
 
     await handler.insertRecord(record);
+  }
+
+  /// 경기 중 메뉴 버튼 선택 시
+  void pause() {
+    gameStatus = GameStatus.pause;
+    update();
+  }
+
+  /// 메뉴에서 돌아가기 or 결과 보기 클릭 시 액션. end일 때는 메뉴를 숨김
+  void hideMenu() {
+    if (gameStatus == GameStatus.pause) {
+      gameStatus = GameStatus.playing;
+    } else {
+      gameStatus = GameStatus.end;
+    }
+    update();
+  }
+
+  /// 게임이 끝났는지 체크. 놓은 순서를 보일지 판단하기 위해 사용.
+  bool isGameFinish() {
+    return gameStatus == GameStatus.draw ||
+            gameStatus == GameStatus.playerOneWin ||
+            gameStatus == GameStatus.playerTwoWin ||
+            gameStatus == GameStatus.end
+        ? true
+        : false;
+  }
+
+  /// 게임중이거나 결과 확인중이면 메뉴를 보이지 않는다.
+  bool isShowMenu() {
+    return gameStatus == GameStatus.playing || gameStatus == GameStatus.end
+        ? false
+        : true;
   }
 }

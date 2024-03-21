@@ -1,50 +1,72 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tic_tac_toe_app/widget/error_snackbar.dart';
+import 'package:tic_tac_toe_app/common/error_snackbar.dart';
 import 'package:tic_tac_toe_app/controller/game_controller.dart';
 
 Widget boardBox(context, int x, int y, {IconData? icon}) {
   GameController controller = Get.find<GameController>();
-  double borderWidth = 10;
-  double width =
-      MediaQuery.of(context).size.width / controller.gridCount - borderWidth;
+
+  double width = (kIsWeb)
+      ? 300 / controller.gridCount
+      : MediaQuery.of(context).size.width / controller.gridCount;
   return GestureDetector(
     onTap: () {
-      bool isEmptyBox = controller.boxClickAction(x, y);
-      if (!isEmptyBox) {
-        errorSnackBar(
-          title: '안돼요!!',
-          message: '이미 놓은 자리에요!!',
-        );
+      if (!controller.isGameFinish()) {
+        bool isEmptyBox = controller.boxClickAction(x, y);
+        if (!isEmptyBox) {
+          errorSnackBar(
+            title: '안돼요!!',
+            message: '이미 놓은 자리에요!!',
+          );
+        }
       }
     },
     child: Center(
       child: Container(
-        width: width > 200 ? 200 : width,
-        height: width > 200 ? 200 : width,
         color: Colors.white70,
-        child: LayoutBuilder(
-          builder: (context, constraints) => Stack(
-            alignment: Alignment.center,
-            children: [
-              Icon(icon,
+        child: Container(
+          width: width < 200 ? 200 : width,
+          height: width < 200 ? 200 : width,
+          decoration: BoxDecoration(
+              border: Border.all(
+            color: Colors.grey,
+            width: 5,
+          )),
+          child: LayoutBuilder(
+            builder: (context, constraints) => Stack(
+              alignment: Alignment.center,
+              children: [
+                Icon(
+                  icon,
                   size: constraints.maxWidth * 0.8, // container의 사이즈에 맞게 동적 조절
                   color: (icon == Icons.abc)
                       ? Colors.transparent
                       : (icon == controller.playerOneMarker)
                           ? controller.playerOneColor
-                          : controller.playerTwoColor),
-              Positioned(
-                top: 5,
-                right: 5,
-                child: Text(
-                  controller.recordData['($x,$y)'] == 0
-                      ? ''
-                      // : controller.recordData['($x,$y)'].toString()),
-                      : '',
+                          : controller.playerTwoColor,
                 ),
-              ),
-            ],
+                Visibility(
+                  visible: controller.isGameFinish(),
+                  child: Positioned(
+                    top: 2,
+                    right: 2,
+                    child: Material(
+                      // Hero에 사용할 수 없는 Text 위젯을 사용하기 위해 Material 속성을 부여
+                      type: MaterialType.transparency,
+                      child: Text(
+                        controller.recordData['($x,$y)'] == 0
+                            ? ''
+                            : controller.recordData['($x,$y)'].toString(),
+                        style: const TextStyle(
+                          decoration: TextDecoration.none,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
