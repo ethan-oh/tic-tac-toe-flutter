@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(393, 852),
       child: GetMaterialApp(
-        title: 'Flutter Demo',
+        title: 'Tic-Tac-Toe',
         theme: ThemeData(
           fontFamily: 'Jalnan2',
           appBarTheme: const AppBarTheme(
