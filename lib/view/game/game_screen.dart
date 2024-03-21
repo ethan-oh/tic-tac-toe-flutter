@@ -36,7 +36,7 @@ class GameScreen extends GetView<GameController> {
                     color: Colors.transparent,
                     elevation: 0,
                     title: '메뉴 보기',
-                    onPressed: () => controller.pause(),
+                    onPressed: () => controller.showMenu(),
                   ),
                 ],
               ),

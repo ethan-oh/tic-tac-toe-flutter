@@ -382,8 +382,20 @@ class GameController extends GetxController {
   }
 
   /// 경기 중 메뉴 버튼 선택 시
-  void pause() {
-    gameStatus = GameStatus.pause;
+  void showMenu() {
+    if (!isGameFinish()) {
+      gameStatus = GameStatus.pause;
+    }else{
+      if (result == '무승부'){
+        gameStatus = GameStatus.draw;
+      } 
+      if (result == 'Player 1 승리'){
+        gameStatus = GameStatus.playerOneWin;
+      } 
+      if (result == 'Player 2 승리'){
+        gameStatus = GameStatus.playerTwoWin;
+      } 
+    }
     update();
   }
 
@@ -408,7 +420,7 @@ class GameController extends GetxController {
   }
 
   /// 게임중이거나 결과 확인중이면 메뉴를 보이지 않는다.
-  bool isShowMenu() {
+  bool isMenuVisible() {
     return gameStatus == GameStatus.playing || gameStatus == GameStatus.end
         ? false
         : true;

@@ -14,7 +14,7 @@ class MenuScreen extends GetView<GameController> {
   Widget build(BuildContext context) {
     return GetBuilder<GameController>(
       builder: (controller) => Visibility(
-        visible: (controller.isShowMenu()),
+        visible: (controller.isMenuVisible()),
         child: Container(
           color: Colors.black54,
           alignment: Alignment.center,
