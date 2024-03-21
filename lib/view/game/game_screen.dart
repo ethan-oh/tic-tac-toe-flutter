@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tic_tac_toe_app/common/home_button.dart';
-import 'package:tic_tac_toe_app/common/simple_button.dart';
 import 'package:tic_tac_toe_app/model/setting_model.dart';
 import 'package:tic_tac_toe_app/controller/game_controller.dart';
 import 'package:tic_tac_toe_app/view/game/game_board.dart';
+import 'package:tic_tac_toe_app/view/game/menu_button.dart';
 import 'package:tic_tac_toe_app/view/game/menu_screen.dart';
 import 'package:tic_tac_toe_app/view/game/player_info.dart';
 
@@ -24,6 +24,7 @@ class GameScreen extends GetView<GameController> {
             actions: const [
               HomeButton(),
             ],
+            leading: MenuButton(controller: controller),
           ),
           body: SafeArea(
             child: SingleChildScrollView(
@@ -32,12 +33,6 @@ class GameScreen extends GetView<GameController> {
                 children: [
                   _gameInfo(),
                   _board(context),
-                  SimpleButton(
-                    color: Colors.transparent,
-                    elevation: 0,
-                    title: '메뉴 보기',
-                    onPressed: () => controller.showMenu(),
-                  ),
                 ],
               ),
             ),

@@ -56,7 +56,7 @@ class RecordsScreen extends GetView<RecordsController> {
   }
 
   Center emptyRecord() {
-    return const Center(
+    return  const Center(
       child: Text(
         '저장된 게임이 없습니다.',
         style: AppStyle.normalTextStyle,

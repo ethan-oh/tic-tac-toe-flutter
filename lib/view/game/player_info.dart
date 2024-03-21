@@ -18,7 +18,8 @@ Widget playerOneInfo({required Color color}) {
         ),
         GetBuilder<GameController>(
           builder: (controller) => ElevatedButton(
-            onPressed: controller.isPlayerOneBacksiesButtonDisable
+            onPressed: controller.isPlayerOneBacksiesButtonDisable ||
+                    controller.isGameFinish()
                 ? null
                 : () => controller.playerOneBacksiesButtonAction(),
             child: const Text('무르기'),
@@ -50,7 +51,8 @@ Widget playerTwoInfo({required Color color}) {
         ),
         GetBuilder<GameController>(
           builder: (controller) => ElevatedButton(
-            onPressed: controller.isPlayerTwoBacksiesButtonDisable
+            onPressed: controller.isPlayerTwoBacksiesButtonDisable ||
+                    controller.isGameFinish()
                 ? null
                 : () => controller.playerTwoBacksiesButtonAction(),
             child: const Text('무르기'),

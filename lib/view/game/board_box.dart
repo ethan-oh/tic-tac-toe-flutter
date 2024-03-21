@@ -7,9 +7,7 @@ import 'package:tic_tac_toe_app/controller/game_controller.dart';
 Widget boardBox(context, int x, int y, {IconData? icon}) {
   GameController controller = Get.find<GameController>();
 
-  double width = (kIsWeb)
-      ? 300 / controller.gridCount
-      : MediaQuery.of(context).size.width / controller.gridCount;
+  double boardWidth = (kIsWeb) ? View.of(context).physicalSize.width : Get.width;
   return GestureDetector(
     onTap: () {
       if (!controller.isGameFinish()) {
@@ -26,8 +24,8 @@ Widget boardBox(context, int x, int y, {IconData? icon}) {
       child: Container(
         color: Colors.white70,
         child: Container(
-          width: width < 200 ? 200 : width,
-          height: width < 200 ? 200 : width,
+          width: boardWidth / controller.gridCount,
+          height: boardWidth / controller.gridCount,
           decoration: BoxDecoration(
               border: Border.all(
             color: Colors.grey,

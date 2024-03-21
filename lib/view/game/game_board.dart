@@ -17,9 +17,10 @@ Widget gameGridBoard(context) {
       );
     }
   }
+  double? boardWidth = (kIsWeb) ? View.of(context).physicalSize.width : null;
   return SizedBox(
-    width: (kIsWeb) ? 600 : null,
-    height: (kIsWeb) ? 600 : null,
+    width: boardWidth,
+    height: boardWidth,
     child: GridView(
       shrinkWrap: true,
       padding: const EdgeInsets.symmetric(horizontal: 5),
