@@ -8,7 +8,6 @@ import 'package:tic_tac_toe_app/view/game/board_box.dart';
 Widget gameGridBoard(context) {
   GameController controller = Get.find<GameController>();
   int gridCount = controller.gridCount;
-  // double width = MediaQuery.of(context).size.width;
   List<Widget> boxList = [];
   for (int i = 1; i <= controller.gridCount; i++) {
     for (int j = 1; j <= controller.gridCount; j++) {
@@ -17,17 +16,20 @@ Widget gameGridBoard(context) {
       );
     }
   }
-  double? boardWidth = (kIsWeb) ? View.of(context).physicalSize.width : null;
-  return SizedBox(
-    width: boardWidth,
-    height: boardWidth,
-    child: GridView(
-      shrinkWrap: true,
-      padding: const EdgeInsets.symmetric(horizontal: 5),
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate:
-          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: gridCount),
-      children: boxList,
+  double? boardWidth = (kIsWeb) ? (Get.height - 173) * 0.8 : null;
+  return Padding(
+    padding: const EdgeInsets.only(top: 10.0),
+    child: SizedBox(
+      width: boardWidth,
+      height: boardWidth,
+      child: GridView(
+
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate:
+            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: gridCount,),
+        children: boxList,
+      ),
     ),
   );
 }

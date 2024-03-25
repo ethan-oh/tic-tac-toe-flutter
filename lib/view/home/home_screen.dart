@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tic_tac_toe_app/common/animation_state.dart';
 import 'package:tic_tac_toe_app/controller/records_controller.dart';
@@ -17,17 +18,21 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              logoImage(),
-              Column(
-                children: [
-                  _startButton(),
-                  _recordButton(),
-                ],
-              ),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                logoImage(),
+                SizedBox(
+                  height: 100.h,
+                ),
+                Column(
+                  children: [
+                    _startButton(),
+                    _recordButton(),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -42,7 +47,7 @@ class HomeScreen extends StatelessWidget {
         scale: state ? 1 : 0.95,
         child: Image.asset(
           'assets/images/game_logo.png',
-          width: 300,
+          height: 300,
           fit: BoxFit.cover,
         ),
       ),

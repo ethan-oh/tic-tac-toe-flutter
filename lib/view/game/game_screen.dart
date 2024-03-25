@@ -52,14 +52,15 @@ class GameScreen extends GetView<GameController> {
   GetBuilder<GameController> _gameInfo() {
     return GetBuilder<GameController>(
       builder: (_) => Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           playerOneInfo(
             color:
-                controller.isPlayerOneTurn ? Colors.white : Colors.transparent,
+                controller.isPlayerOneTurn ? Colors.white : Colors.black.withOpacity(0.05),
           ),
           playerTwoInfo(
             color:
-                controller.isPlayerOneTurn ? Colors.transparent : Colors.white,
+                controller.isPlayerOneTurn ? Colors.black.withOpacity(0.05) : Colors.white,
           ),
         ],
       ),
