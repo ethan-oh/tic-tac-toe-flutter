@@ -58,10 +58,10 @@ class SettingScreen extends GetView<SettingController> {
         color: Colors.indigo[900],
         onPressed: () => Get.to(
           () => GameScreen(
-            settings: controller.getSettingModel(),
+            settings: controller.retriveCurrentSetting(),
           ),
           binding: BindingsBuilder(() {
-            Get.put(GameController(controller.getSettingModel()));
+            Get.put(GameController(controller.retriveCurrentSetting()));
           }),
           transition: Transition.zoom,
         ),
@@ -78,7 +78,7 @@ class SettingScreen extends GetView<SettingController> {
           GetBuilder<SettingController>(
             builder: (_) => CupertinoSlidingSegmentedControl(
               groupValue: controller.turnSegmentValue,
-              onValueChanged: (value) => controller.selectTurn(value),
+              onValueChanged: (value) => controller.setTurn(value),
               children: {
                 TurnOpt.random: segmentWidget(
                   '랜덤',
@@ -102,18 +102,18 @@ class SettingScreen extends GetView<SettingController> {
           GetBuilder<SettingController>(
             builder: (_) => CupertinoSlidingSegmentedControl(
               thumbColor: isPlayerOne
-                  ? controller.colorOneSegmentValue.color
-                  : controller.colorTwoSegmentValue.color,
+                  ? controller.colorOneSegmentValue.value
+                  : controller.colorTwoSegmentValue.value,
               groupValue: isPlayerOne
                   ? controller.markerOneSegmentValue
                   : controller.markerTwoSegmentValue,
               onValueChanged: (value) {
                 bool isImpossible = isPlayerOne
-                    ? controller.selectMarker(
+                    ? controller.setMarker(
                         value: value,
                         isFirstMarker: true,
                       )
-                    : controller.selectMarker(
+                    : controller.setMarker(
                         value: value,
                         isFirstMarker: false,
                       );
@@ -139,11 +139,11 @@ class SettingScreen extends GetView<SettingController> {
                   : controller.colorTwoSegmentValue,
               onValueChanged: (value) {
                 bool isImpossible = isPlayerOne
-                    ? controller.selectColor(
+                    ? controller.setColor(
                         value: value,
                         isFirstColor: true,
                       )
-                    : controller.selectColor(
+                    : controller.setColor(
                         value: value,
                         isFirstColor: false,
                       );
@@ -177,7 +177,7 @@ class SettingScreen extends GetView<SettingController> {
             builder: (_) => CupertinoSlidingSegmentedControl(
               groupValue: controller.alignSegmentValue,
               onValueChanged: (value) {
-                bool isImpossible = controller.selectAlign(value);
+                bool isImpossible = controller.setAlign(value);
                 if (isImpossible) {
                   Get.closeAllSnackbars(); // 여러 번 클릭해도 한 번만 보이게 미리 닫는다
                   const GetSnackBar(
@@ -213,7 +213,7 @@ class SettingScreen extends GetView<SettingController> {
           GetBuilder<SettingController>(
             builder: (_) => CupertinoSlidingSegmentedControl(
               groupValue: controller.gridSegmentValue,
-              onValueChanged: (value) => controller.selectGrid(value),
+              onValueChanged: (value) => controller.setGrid(value),
               children: {
                 GridOpt.threeByThree: segmentWidget('3 X 3'),
                 GridOpt.fourByFour: segmentWidget('4 X 4'),
@@ -228,7 +228,7 @@ class SettingScreen extends GetView<SettingController> {
 
   IconButton _resetButton() {
     return IconButton(
-      onPressed: () => controller.resetValues(),
+      onPressed: () => controller.resetSetting(),
       icon: const Icon(
         Icons.refresh,
       ),

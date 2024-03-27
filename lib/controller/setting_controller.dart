@@ -1,111 +1,111 @@
 import 'package:get/get.dart';
 import 'package:tic_tac_toe_app/common/enums.dart';
+import 'package:tic_tac_toe_app/controller/setting_validator_mixin.dart';
 import 'package:tic_tac_toe_app/model/setting_model.dart';
 
-class SettingController extends GetxController {
-  TurnOpt turnSegmentValue = TurnOpt.random;
-  GridOpt gridSegmentValue = GridOpt.threeByThree;
-  AlignOpt alignSegmentValue = AlignOpt.three;
-  MarkerOpt markerOneSegmentValue = MarkerOpt.cross; // Player 1의 마커 선택
-  MarkerOpt markerTwoSegmentValue = MarkerOpt.circle; // Player 2의 마커 선택
-  ColorOpt colorOneSegmentValue = ColorOpt.blue; // Player 2의 마커 선택
-  ColorOpt colorTwoSegmentValue = ColorOpt.red; // Player 2의 마커 선택
+class SettingController extends GetxController with SettingValidatorMixin {
+  // default 값 세팅
+  TurnOpt _turnSegmentValue = TurnOpt.random;
+  GridOpt _gridSegmentValue = GridOpt.threeByThree;
+  AlignOpt _alignSegmentValue = AlignOpt.three;
+  MarkerOpt _markerOneSegmentValue = MarkerOpt.cross;
+  MarkerOpt _markerTwoSegmentValue = MarkerOpt.circle;
+  ColorOpt _colorOneSegmentValue = ColorOpt.blue;
+  ColorOpt _colorTwoSegmentValue = ColorOpt.red;
 
-  selectGrid(GridOpt? value) {
+  // getter
+  TurnOpt get turnSegmentValue => _turnSegmentValue;
+  GridOpt get gridSegmentValue => _gridSegmentValue;
+  AlignOpt get alignSegmentValue => _alignSegmentValue;
+  MarkerOpt get markerOneSegmentValue => _markerOneSegmentValue;
+  MarkerOpt get markerTwoSegmentValue => _markerTwoSegmentValue;
+  ColorOpt get colorOneSegmentValue => _colorOneSegmentValue;
+  ColorOpt get colorTwoSegmentValue => _colorTwoSegmentValue;
+
+  void setGrid(GridOpt? value) {
     if (value != null) {
-      alignSegmentValue = AlignOpt.three;
-      gridSegmentValue = value;
+      _alignSegmentValue = AlignOpt.three;
+      _gridSegmentValue = value;
       // 그리드 선택에 따른 승리 조건 제한
       update();
     }
   }
 
-  selectTurn(TurnOpt? value) {
+  void setTurn(TurnOpt? value) {
     if (value != null) {
-      turnSegmentValue = value;
+      _turnSegmentValue = value;
       // 그리드 선택에 따른 승리 조건 제한
       update();
     }
   }
 
-  bool selectAlign(AlignOpt? value) {
-    bool isImpossibleCondition = false;
+  bool setAlign(AlignOpt? value) {
     if (value != null) {
-      switch (gridSegmentValue) {
-        case GridOpt.threeByThree:
-          isImpossibleCondition = true;
-          break;
-        case GridOpt.fourByFour:
-          if (value != AlignOpt.five) {
-            alignSegmentValue = value;
-          } else {
-            isImpossibleCondition = true;
-          }
-          break;
-        case GridOpt.fiveByFive:
-          alignSegmentValue = value;
+      bool isValid = isAlignValid(_gridSegmentValue, value);
+      if (isValid) {
+        _alignSegmentValue = value;
+        update();
       }
-      update();
+      return !isValid;
     }
-    return isImpossibleCondition;
+    return false;
   }
 
-  bool selectMarker({required MarkerOpt? value, required bool isFirstMarker}) {
-    bool isImpossibleCondition = false;
+  bool setMarker({required MarkerOpt? value, required bool isFirstMarker}) {
     if (value != null) {
-      if ((isFirstMarker && value != markerTwoSegmentValue) ||
-          (!isFirstMarker && value != markerOneSegmentValue)) {
+      bool isValid = isMarkerValid(
+          _markerOneSegmentValue, _markerTwoSegmentValue, value);
+      if (isValid) {
         if (isFirstMarker) {
-          markerOneSegmentValue = value;
+          _markerOneSegmentValue = value;
         } else {
-          markerTwoSegmentValue = value;
+          _markerTwoSegmentValue = value;
         }
-      } else {
-        isImpossibleCondition = true;
+        update();
       }
-      update();
+      return !isValid;
     }
-    return isImpossibleCondition;
+    return false;
   }
 
-  bool selectColor({required ColorOpt? value, required bool isFirstColor}) {
-    bool isImpossibleCondition = false;
+  bool setColor({required ColorOpt? value, required bool isFirstColor}) {
     if (value != null) {
-      if ((isFirstColor && value != colorTwoSegmentValue) ||
-          (!isFirstColor && value != colorOneSegmentValue)) {
+      bool isValid = isColorValid(
+          _colorOneSegmentValue, _colorTwoSegmentValue, value);
+      if (isValid) {
         if (isFirstColor) {
-          colorOneSegmentValue = value;
+          _colorOneSegmentValue = value;
         } else {
-          colorTwoSegmentValue = value;
+          _colorTwoSegmentValue = value;
         }
-      } else {
-        isImpossibleCondition = true;
+        update();
       }
-      update();
+      return !isValid;
     }
-    return isImpossibleCondition;
+    return false;
   }
 
-  resetValues() {
-    gridSegmentValue = GridOpt.threeByThree;
-    alignSegmentValue = AlignOpt.three;
-    markerOneSegmentValue = MarkerOpt.cross; // Player 1의 마커 선택
-    markerTwoSegmentValue = MarkerOpt.circle; // Player 2의 마커 선택
-    colorOneSegmentValue = ColorOpt.blue;
-    colorTwoSegmentValue = ColorOpt.red;
-    turnSegmentValue = TurnOpt.random;
+
+  void resetSetting() {
+    _gridSegmentValue = GridOpt.threeByThree;
+    _alignSegmentValue = AlignOpt.three;
+    _markerOneSegmentValue = MarkerOpt.cross;
+    _markerTwoSegmentValue = MarkerOpt.circle;
+    _colorOneSegmentValue = ColorOpt.blue;
+    _colorTwoSegmentValue = ColorOpt.red;
+    _turnSegmentValue = TurnOpt.random;
     update();
   }
 
-  SettingModel getSettingModel() {
+  SettingModel retriveCurrentSetting() {
     return SettingModel(
-      gridCount: gridSegmentValue.gridCount,
-      alignCount: alignSegmentValue.alignCount,
-      playerOneMarker: markerOneSegmentValue.marker,
-      playerOneColor: colorOneSegmentValue.color,
-      playerTwoMarker: markerTwoSegmentValue.marker,
-      playerTwoColor: colorTwoSegmentValue.color,
-      firstPlayer: turnSegmentValue,
+      gridCount: _gridSegmentValue.value,
+      alignCount: _alignSegmentValue.value,
+      playerOneMarker: _markerOneSegmentValue.value,
+      playerOneColor: _colorOneSegmentValue.value,
+      playerTwoMarker: _markerTwoSegmentValue.value,
+      playerTwoColor: _colorTwoSegmentValue.value,
+      firstPlayer: _turnSegmentValue,
     );
   }
 }
