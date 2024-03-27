@@ -8,16 +8,15 @@ class RecordsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    handler = DatabaseHandler();
     queryAllRecords();
   }
 
-  late DatabaseHandler handler;
-  List<RecordModel> records = [];
+  List<RecordModel> _records = [];
+  List<RecordModel> get records => _records;
 
   // 전체 검색
   Future<void> queryAllRecords() async {
-    records = await handler.queryAllRecord();
+    _records = await DatabaseHandler.queryAllRecord();
     update();
   }
 
@@ -31,12 +30,12 @@ class RecordsController extends GetxController {
 
   // 디비에서 삭제 후 재검색
   Future<void> deleteRecord(int id) async {
-    await handler.deleteRecord(id);
+    await DatabaseHandler.deleteRecord(id);
     queryAllRecords();
   }
 
   Future<void> deleteAllRecord() async {
-    await handler.deleteAllRecord();
+    await DatabaseHandler.deleteAllRecord();
     queryAllRecords();
   }
 }

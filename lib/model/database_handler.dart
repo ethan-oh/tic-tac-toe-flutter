@@ -5,7 +5,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:tic_tac_toe_app/model/record_model.dart';
 
 class DatabaseHandler {
-  Future<Database> initializeDB() async {
+  static Future<Database> initializeDB() async {
     // db 안에 table이 없을 때만 실행됨
     String path = await getDatabasesPath();
     return openDatabase(
@@ -18,8 +18,8 @@ class DatabaseHandler {
     );
   }
 
-//
-  Future<List<RecordModel>> queryAllRecord() async {
+
+  static Future<List<RecordModel>> queryAllRecord() async {
     final Database db = await initializeDB();
     final List<Map<String, Object?>> queryResults =
         await db.rawQuery('SELECT * FROM records ORDER BY dateTime DESC');
@@ -27,8 +27,8 @@ class DatabaseHandler {
     return queryResults.map((e) => RecordModel.fromJson(e)).toList();
   }
 
-//
-  Future<void> insertRecord(RecordModel record) async {
+
+  static Future<void> insertRecord(RecordModel record) async {
     final Database db = await initializeDB();
     await db.rawInsert(
       'INSERT INTO records(boardSize, recordData, playerOneIcon, playerTwoIcon, playerOneColor, playerTwoColor, isPlayerOneStartFirst, align, playerOneRemainBackies, playerTwoRemainBackies, dateTime, result) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
@@ -49,7 +49,7 @@ class DatabaseHandler {
     );
   }
 
-  Future<void> deleteRecord(int id) async {
+  static Future<void> deleteRecord(int id) async {
     final Database db = await initializeDB();
     await db.rawDelete(
       'delete from records where id = ?', 
@@ -57,7 +57,7 @@ class DatabaseHandler {
     );
   }
 
-  Future<void> deleteAllRecord() async {
+  static Future<void> deleteAllRecord() async {
     final Database db = await initializeDB();
     await db.rawDelete(
       'delete from records',

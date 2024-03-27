@@ -5,8 +5,9 @@ import 'package:tic_tac_toe_app/common/font_style.dart';
 import 'package:tic_tac_toe_app/view/home/home_screen.dart';
 import 'package:get/get.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // 기기 회전 제한
   SystemChrome.setPreferredOrientations(
     [
       DeviceOrientation.portraitUp,
@@ -19,7 +20,6 @@ void main() async{
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
             foregroundColor: Colors.black87,
             elevation: 0,
             iconTheme: IconThemeData(
-              size: 30
+              size: 30,
             ),
           ),
           useMaterial3: true,

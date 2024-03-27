@@ -363,7 +363,6 @@ class GameController extends GetxController {
 
   // db에 저장
   Future<void> saveRecord() async {
-    DatabaseHandler handler = DatabaseHandler();
     RecordModel record = RecordModel(
         boardSize: gridCount,
         recordData: jsonEncode(recordData),
@@ -378,7 +377,7 @@ class GameController extends GetxController {
         dateTime: DateTime.now().toString(),
         result: result);
 
-    await handler.insertRecord(record);
+    await DatabaseHandler.insertRecord(record);
   }
 
   /// 경기 중 메뉴 버튼 선택 시
