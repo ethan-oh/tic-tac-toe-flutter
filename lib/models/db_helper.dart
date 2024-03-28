@@ -4,7 +4,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:tic_tac_toe_app/models/record_model.dart';
 
-class DatabaseHandler {
+class DBHelper {
   static Future<Database> initializeDB() async {
     // db 안에 table이 없을 때만 실행됨
     String path = await getDatabasesPath();
@@ -19,7 +19,7 @@ class DatabaseHandler {
   }
 
 
-  static Future<List<RecordModel>> queryAllRecord() async {
+  static Future<List<RecordModel>> fetchAllRecords() async {
     final Database db = await initializeDB();
     final List<Map<String, Object?>> queryResults =
         await db.rawQuery('SELECT * FROM records ORDER BY dateTime DESC');
@@ -49,7 +49,7 @@ class DatabaseHandler {
     );
   }
 
-  static Future<void> deleteRecord(int id) async {
+  static Future<void> deleteRecordById(int id) async {
     final Database db = await initializeDB();
     await db.rawDelete(
       'delete from records where id = ?', 
@@ -57,7 +57,7 @@ class DatabaseHandler {
     );
   }
 
-  static Future<void> deleteAllRecord() async {
+  static Future<void> deleteAllRecords() async {
     final Database db = await initializeDB();
     await db.rawDelete(
       'delete from records',

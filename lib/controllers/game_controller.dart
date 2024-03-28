@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tic_tac_toe_app/constants.dart';
-import 'package:tic_tac_toe_app/models/database_handler.dart';
+import 'package:tic_tac_toe_app/models/db_helper.dart';
 import 'package:tic_tac_toe_app/models/record_model.dart';
 import 'package:tic_tac_toe_app/models/setting_model.dart';
 
@@ -376,7 +376,7 @@ class GameController extends GetxController {
         dateTime: DateTime.now().toString(),
         result: result);
 
-    await DatabaseHandler.insertRecord(record);
+    await DBHelper.insertRecord(record);
   }
 
   /// 경기 중 메뉴 버튼 선택 시

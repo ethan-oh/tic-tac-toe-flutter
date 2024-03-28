@@ -1,21 +1,21 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:tic_tac_toe_app/models/database_handler.dart';
+import 'package:tic_tac_toe_app/models/db_helper.dart';
 import 'package:tic_tac_toe_app/models/record_model.dart';
 
 class RecordsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    queryAllRecord();
+    fethcAllRecords();
   }
 
   List<RecordModel> _records = [];
   List<RecordModel> get records => _records;
 
-  Future<void> queryAllRecord() async {
-    _records = await DatabaseHandler.queryAllRecord();
+  Future<void> fethcAllRecords() async {
+    _records = await DBHelper.fetchAllRecords();
     update();
   }
 
@@ -27,13 +27,13 @@ class RecordsController extends GetxController {
             : '5X5';
   }
 
-  Future<void> deleteRecord(int id) async {
-    await DatabaseHandler.deleteRecord(id);
-    queryAllRecord();
+  Future<void> deleteRecordById(int id) async {
+    await DBHelper.deleteRecordById(id);
+    fethcAllRecords();
   }
 
-  Future<void> deleteAllRecord() async {
-    await DatabaseHandler.deleteAllRecord();
-    queryAllRecord();
+  Future<void> deleteAllRecords() async {
+    await DBHelper.deleteAllRecords();
+    fethcAllRecords();
   }
 }

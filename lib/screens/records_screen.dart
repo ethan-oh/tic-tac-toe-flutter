@@ -39,7 +39,7 @@ class RecordsScreen extends GetView<RecordsController> {
                 title: '삭제',
                 middleText: '기록을 모두 삭제하시겠습니까?',
                 onConfirm: () =>
-                    controller.deleteAllRecord().then((value) => Get.back()),
+                    controller.deleteAllRecords().then((value) => Get.back()),
               )
             : null,
         icon: Icon(
@@ -76,7 +76,7 @@ class RecordsScreen extends GetView<RecordsController> {
                 label: '삭제',
                 onPressed: (context) {
                   int id = controller.records[index].id!;
-                  controller.deleteRecord(id);
+                  controller.deleteRecordById(id);
                 },
               ),
             ],
