@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
-import 'package:tic_tac_toe_app/common/font_style.dart';
-import 'package:tic_tac_toe_app/controller/records_controller.dart';
-import 'package:tic_tac_toe_app/view/record/record_card.dart';
-import 'package:tic_tac_toe_app/view/record/record_screen.dart';
+import 'package:tic_tac_toe_app/utils/alert_dialog.dart';
+import 'package:tic_tac_toe_app/constants.dart';
+import 'package:tic_tac_toe_app/controllers/records_controller.dart';
+import 'package:tic_tac_toe_app/widgets/records/record_card.dart';
+import 'package:tic_tac_toe_app/screens/record_screen.dart';
 
 class RecordsScreen extends GetView<RecordsController> {
   const RecordsScreen({super.key});
@@ -12,10 +13,8 @@ class RecordsScreen extends GetView<RecordsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.blueGrey,
       appBar: AppBar(
         title: const Text('기록 보기'),
-        // backgroundColor: Colors.blueGrey,
         actions: [
           _deleteAllButton(),
         ],
@@ -35,17 +34,14 @@ class RecordsScreen extends GetView<RecordsController> {
     return Padding(
       padding: const EdgeInsets.only(right: 10),
       child: IconButton(
-        onPressed: () => Get.defaultDialog(
-            title: "삭제",
-            middleText: "기록을 모두 삭제하시겠습니까?",
-            buttonColor: Colors.blue,
-            backgroundColor: Colors.white,
-            confirmTextColor: Colors.white,
-            textConfirm: "확인",
-            onConfirm: () =>
-                controller.deleteAllRecord().then((value) => Get.back()),
-            textCancel: "취소",
-            onCancel: () {}),
+        onPressed: () => controller.records.isNotEmpty
+            ? showAlertDialog(
+                title: '삭제',
+                middleText: '기록을 모두 삭제하시겠습니까?',
+                onConfirm: () =>
+                    controller.deleteAllRecord().then((value) => Get.back()),
+              )
+            : null,
         icon: Icon(
           Icons.delete,
           size: 35,
@@ -56,10 +52,10 @@ class RecordsScreen extends GetView<RecordsController> {
   }
 
   Center emptyRecord() {
-    return  const Center(
+    return const Center(
       child: Text(
         '저장된 게임이 없습니다.',
-        style: AppStyle.normalTextStyle,
+        style: normalTextStyle,
       ),
     );
   }

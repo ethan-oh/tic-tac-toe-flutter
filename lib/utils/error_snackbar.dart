@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-void errorSnackBar({required String title, required String message} ) {
+void showErrorSnackBar({required String title, required String message} ) {
   Get.closeAllSnackbars();
   Get.snackbar(
     title,

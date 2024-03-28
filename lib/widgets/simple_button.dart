@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tic_tac_toe_app/common/font_style.dart';
+import 'package:tic_tac_toe_app/constants.dart';
 
 class SimpleButton extends StatelessWidget {
   final VoidCallback? onPressed;
@@ -28,7 +28,7 @@ class SimpleButton extends StatelessWidget {
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.3),
+              color: Colors.black.withOpacity(0.1),
               spreadRadius: 1,
               blurRadius: 10,
               offset: const Offset(0, 0),
@@ -48,7 +48,7 @@ class SimpleButton extends StatelessWidget {
               )),
           child: Text(
             title,
-            style: textStyle ?? AppStyle.buttonStyle,
+            style: textStyle ?? buttonStyle,
           ),
         ),
       ),

@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tic_tac_toe_app/common/font_style.dart';
-import 'package:tic_tac_toe_app/view/home/home_screen.dart';
+import 'package:tic_tac_toe_app/constants.dart';
+import 'package:tic_tac_toe_app/screens/home_screen.dart';
 import 'package:get/get.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // 기기 회전 제한
-  SystemChrome.setPreferredOrientations(
-    [
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ],
-  );
+  // // 기기 회전 제한
+  // SystemChrome.setPreferredOrientations(
+  //   [
+  //     DeviceOrientation.portraitUp,
+  //     DeviceOrientation.portraitDown,
+  //   ],
+  // );
   runApp(const MyApp());
 }
 
@@ -30,7 +29,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Jalnan2',
           appBarTheme: const AppBarTheme(
             centerTitle: true,
-            titleTextStyle: AppStyle.appBarTitleStyle,
+            titleTextStyle: appBarTitleStyle,
             color: Colors.grey,
             actionsIconTheme: IconThemeData(
               color: Colors.black87,

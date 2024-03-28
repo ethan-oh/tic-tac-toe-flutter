@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:tic_tac_toe_app/model/record_model.dart';
+import 'package:tic_tac_toe_app/models/record_model.dart';
 
 class DatabaseHandler {
   static Future<Database> initializeDB() async {

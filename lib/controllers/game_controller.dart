@@ -3,12 +3,11 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tic_tac_toe_app/common/enums.dart';
-import 'package:tic_tac_toe_app/model/database_handler.dart';
-import 'package:tic_tac_toe_app/model/record_model.dart';
-import 'package:tic_tac_toe_app/model/setting_model.dart';
+import 'package:tic_tac_toe_app/constants.dart';
+import 'package:tic_tac_toe_app/models/database_handler.dart';
+import 'package:tic_tac_toe_app/models/record_model.dart';
+import 'package:tic_tac_toe_app/models/setting_model.dart';
 
-enum GameStatus { playing, playerOneWin, playerTwoWin, draw, pause, end }
 
 class GameController extends GetxController {
   final SettingModel settings;

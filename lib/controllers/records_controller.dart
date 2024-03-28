@@ -1,21 +1,20 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:tic_tac_toe_app/model/database_handler.dart';
-import 'package:tic_tac_toe_app/model/record_model.dart';
+import 'package:tic_tac_toe_app/models/database_handler.dart';
+import 'package:tic_tac_toe_app/models/record_model.dart';
 
 class RecordsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    queryAllRecords();
+    queryAllRecord();
   }
 
   List<RecordModel> _records = [];
   List<RecordModel> get records => _records;
 
-  // 전체 검색
-  Future<void> queryAllRecords() async {
+  Future<void> queryAllRecord() async {
     _records = await DatabaseHandler.queryAllRecord();
     update();
   }
@@ -28,14 +27,13 @@ class RecordsController extends GetxController {
             : '5X5';
   }
 
-  // 디비에서 삭제 후 재검색
   Future<void> deleteRecord(int id) async {
     await DatabaseHandler.deleteRecord(id);
-    queryAllRecords();
+    queryAllRecord();
   }
 
   Future<void> deleteAllRecord() async {
     await DatabaseHandler.deleteAllRecord();
-    queryAllRecords();
+    queryAllRecord();
   }
 }

@@ -1,9 +1,8 @@
 import 'package:get/get.dart';
-import 'package:tic_tac_toe_app/common/enums.dart';
-import 'package:tic_tac_toe_app/controller/setting_validator_mixin.dart';
-import 'package:tic_tac_toe_app/model/setting_model.dart';
+import 'package:tic_tac_toe_app/constants.dart';
+import 'package:tic_tac_toe_app/models/setting_model.dart';
 
-class SettingController extends GetxController with SettingValidatorMixin {
+class SettingController extends GetxController {
   // default 값 세팅
   TurnOpt _turnSegmentValue = TurnOpt.random;
   GridOpt _gridSegmentValue = GridOpt.threeByThree;
@@ -41,7 +40,7 @@ class SettingController extends GetxController with SettingValidatorMixin {
 
   bool setAlign(AlignOpt? value) {
     if (value != null) {
-      bool isValid = isAlignValid(_gridSegmentValue, value);
+      bool isValid = _isAlignValid(_gridSegmentValue, value);
       if (isValid) {
         _alignSegmentValue = value;
         update();
@@ -53,7 +52,7 @@ class SettingController extends GetxController with SettingValidatorMixin {
 
   bool setMarker({required MarkerOpt? value, required bool isFirstMarker}) {
     if (value != null) {
-      bool isValid = isMarkerValid(
+      bool isValid = _isMarkerValid(
           _markerOneSegmentValue, _markerTwoSegmentValue, value);
       if (isValid) {
         if (isFirstMarker) {
@@ -70,7 +69,7 @@ class SettingController extends GetxController with SettingValidatorMixin {
 
   bool setColor({required ColorOpt? value, required bool isFirstColor}) {
     if (value != null) {
-      bool isValid = isColorValid(
+      bool isValid = _isColorValid(
           _colorOneSegmentValue, _colorTwoSegmentValue, value);
       if (isValid) {
         if (isFirstColor) {
@@ -107,5 +106,29 @@ class SettingController extends GetxController with SettingValidatorMixin {
       playerTwoColor: _colorTwoSegmentValue.value,
       firstPlayer: _turnSegmentValue,
     );
+  }
+
+  bool _isAlignValid(GridOpt gridOpt, AlignOpt alignOpt) {
+    switch (gridOpt) {
+      // 3x3 : align 선택 불가능
+      case GridOpt.threeByThree:
+        return false;
+      // 4x4 : alignOpt가 5가 아닐 때 (3,4) 가능
+      case GridOpt.fourByFour:
+        return alignOpt != AlignOpt.five;
+      // align 선택 제한 없음
+      case GridOpt.fiveByFive:
+        return true;
+    }
+  }
+
+  bool _isMarkerValid(MarkerOpt markerOneSegmentValue,
+      MarkerOpt markerTwoSegmentValue, MarkerOpt value) {
+    return (value != markerTwoSegmentValue) && (value != markerOneSegmentValue);
+  }
+
+  bool _isColorValid(ColorOpt colorOneSegmentValue,
+      ColorOpt colorTwoSegmentValue, ColorOpt value) {
+    return (value != colorTwoSegmentValue) && (value != colorOneSegmentValue);
   }
 }

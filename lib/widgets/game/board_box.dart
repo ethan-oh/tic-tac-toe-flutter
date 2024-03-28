@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tic_tac_toe_app/common/error_snackbar.dart';
-import 'package:tic_tac_toe_app/controller/game_controller.dart';
+import 'package:tic_tac_toe_app/utils/error_snackbar.dart';
+import 'package:tic_tac_toe_app/controllers/game_controller.dart';
 
 Widget boardBox(context, int x, int y, {IconData? icon}) {
   GameController controller = Get.find<GameController>();
@@ -13,7 +13,7 @@ Widget boardBox(context, int x, int y, {IconData? icon}) {
       if (!controller.isGameFinish()) {
         bool isEmptyBox = controller.boxClickAction(x, y);
         if (!isEmptyBox) {
-          errorSnackBar(
+          showErrorSnackBar(
             title: '안돼요!!',
             message: '이미 놓은 자리에요!!',
           );

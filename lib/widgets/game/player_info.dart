@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tic_tac_toe_app/controller/game_controller.dart';
-import 'package:tic_tac_toe_app/common/font_style.dart';
+import 'package:tic_tac_toe_app/constants.dart';
+import 'package:tic_tac_toe_app/controllers/game_controller.dart';
 
 Widget playerOneInfo({required Color color}) {
   GameController controller = Get.find<GameController>();
@@ -19,7 +19,7 @@ Widget playerOneInfo({required Color color}) {
             padding: EdgeInsets.only(top: 10.0),
             child: Text(
               'Player 1',
-              style: AppStyle.settingTitleStyle,
+              style: settingTitleStyle,
             ),
           ),
           GetBuilder<GameController>(
@@ -59,7 +59,7 @@ Widget playerTwoInfo({required Color color}) {
             padding: EdgeInsets.only(top: 10.0),
             child: Text(
               'Player 2',
-              style: AppStyle.settingTitleStyle,
+              style: settingTitleStyle,
             ),
           ),
           GetBuilder<GameController>(

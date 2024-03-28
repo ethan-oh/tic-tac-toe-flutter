@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tic_tac_toe_app/common/enums.dart';
+import 'package:tic_tac_toe_app/constants.dart';
 
 class SettingModel {
   final int gridCount;

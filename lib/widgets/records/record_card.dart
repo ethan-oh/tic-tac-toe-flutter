@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tic_tac_toe_app/common/font_style.dart';
-import 'package:tic_tac_toe_app/model/record_model.dart';
-import 'package:tic_tac_toe_app/view/record/result_board.dart';
+import 'package:tic_tac_toe_app/constants.dart';
+import 'package:tic_tac_toe_app/models/record_model.dart';
+import 'package:tic_tac_toe_app/widgets/records/result_board.dart';
 
 class RecordCard extends StatelessWidget {
   final BuildContext context;
@@ -43,16 +43,16 @@ class RecordCard extends StatelessWidget {
                   type: MaterialType.transparency,
                   child: Text(
                     recordModel.result,
-                    style: AppStyle.normalTextStyle,
+                    style: normalTextStyle,
                   ),
                 ),
                 Text(
                   '조건 : ${recordModel.align.toString()}칸 완성',
-                  style: AppStyle.dateTimeTextStyle,
+                  style: dateTimeTextStyle,
                 ),
                 Text(
                   recordModel.dateTime,
-                  style: AppStyle.dateTimeTextStyle,
+                  style: dateTimeTextStyle,
                 ),
               ],
             ),

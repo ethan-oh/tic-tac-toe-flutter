@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tic_tac_toe_app/model/record_model.dart';
+import 'package:tic_tac_toe_app/models/record_model.dart';
 
 class ResultBoard extends StatelessWidget {
   final BuildContext context;

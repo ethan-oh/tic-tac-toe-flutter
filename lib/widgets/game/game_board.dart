@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tic_tac_toe_app/controller/game_controller.dart';
-import 'package:tic_tac_toe_app/view/game/board_box.dart';
+import 'package:tic_tac_toe_app/controllers/game_controller.dart';
+import 'package:tic_tac_toe_app/widgets/game/board_box.dart';
 
 Widget gameGridBoard(context) {
   GameController controller = Get.find<GameController>();
