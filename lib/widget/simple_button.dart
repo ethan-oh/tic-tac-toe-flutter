@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tic_tac_toe_app/constants.dart';
+import 'package:tic_tac_toe_app/constant/text_styles.dart';
 
 class SimpleButton extends StatelessWidget {
   final VoidCallback? onPressed;

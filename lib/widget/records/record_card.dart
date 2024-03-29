@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tic_tac_toe_app/constants.dart';
-import 'package:tic_tac_toe_app/models/record_model.dart';
-import 'package:tic_tac_toe_app/widgets/records/result_board.dart';
+import 'package:tic_tac_toe_app/constant/text_styles.dart';
+import 'package:tic_tac_toe_app/model/record_model.dart';
+import 'package:tic_tac_toe_app/widget/records/result_board.dart';
 
 class RecordCard extends StatelessWidget {
   final BuildContext context;

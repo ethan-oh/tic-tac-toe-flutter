@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tic_tac_toe_app/utils/error_snackbar.dart';
-import 'package:tic_tac_toe_app/controllers/game_controller.dart';
+import 'package:tic_tac_toe_app/util/error_snackbar.dart';
+import 'package:tic_tac_toe_app/controller/game_controller.dart';
 
 Widget boardBox(context, int x, int y, {IconData? icon}) {
   GameController controller = Get.find<GameController>();
@@ -22,9 +22,9 @@ Widget boardBox(context, int x, int y, {IconData? icon}) {
     },
     child: Container(
       color: Colors.white70,
+      width: boardWidth / controller.gridCount,
+      height: boardWidth / controller.gridCount,
       child: Container(
-        width: boardWidth / controller.gridCount,
-        height: boardWidth / controller.gridCount,
         decoration: BoxDecoration(
           border: Border.all(
             color: Colors.grey,

@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:tic_tac_toe_app/models/db_helper.dart';
-import 'package:tic_tac_toe_app/models/record_model.dart';
+import 'package:tic_tac_toe_app/model/db_helper.dart';
+import 'package:tic_tac_toe_app/model/record_model.dart';
 
 class RecordsController extends GetxController {
   @override

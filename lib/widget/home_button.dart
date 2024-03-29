@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tic_tac_toe_app/utils/alert_dialog.dart';
-import 'package:tic_tac_toe_app/screens/home_screen.dart';
+import 'package:tic_tac_toe_app/util/alert_dialog.dart';
+import 'package:tic_tac_toe_app/screen/home_screen.dart';
 
 class HomeButton extends StatelessWidget {
   const HomeButton({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tic_tac_toe_app/controllers/game_controller.dart';
+import 'package:tic_tac_toe_app/controller/game_controller.dart';
 
 class MenuButton extends StatelessWidget {
   const MenuButton({

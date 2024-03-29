@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tic_tac_toe_app/constants.dart';
-import 'package:tic_tac_toe_app/models/record_model.dart';
+import 'package:tic_tac_toe_app/constant/text_styles.dart';
+import 'package:tic_tac_toe_app/model/record_model.dart';
 
 class ResultPlayerInfo extends StatelessWidget {
   const ResultPlayerInfo({

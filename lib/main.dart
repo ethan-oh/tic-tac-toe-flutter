@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tic_tac_toe_app/constants.dart';
-import 'package:tic_tac_toe_app/screens/home_screen.dart';
+import 'package:tic_tac_toe_app/constant/text_styles.dart';
+import 'package:tic_tac_toe_app/screen/home_screen.dart';
 import 'package:get/get.dart';
 
 void main() async {

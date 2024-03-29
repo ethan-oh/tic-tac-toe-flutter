@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tic_tac_toe_app/constants.dart';
-import 'package:tic_tac_toe_app/widgets/records/result_board.dart';
-import 'package:tic_tac_toe_app/widgets/home_button.dart';
-import 'package:tic_tac_toe_app/models/record_model.dart';
-import 'package:tic_tac_toe_app/widgets/records/result_player_info.dart';
+import 'package:tic_tac_toe_app/constant/text_styles.dart';
+import 'package:tic_tac_toe_app/widget/records/result_board.dart';
+import 'package:tic_tac_toe_app/widget/home_button.dart';
+import 'package:tic_tac_toe_app/model/record_model.dart';
+import 'package:tic_tac_toe_app/widget/records/result_player_info.dart';
 
 class RecordScreen extends StatelessWidget {
   final RecordModel recordModel;
@@ -20,14 +20,16 @@ class RecordScreen extends StatelessWidget {
           HomeButton(),
         ],
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          _winConditionText(),
-          _resultInfo(),
-          _winner(),
-          _board(context),
-        ],
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            _winConditionText(),
+            _resultInfo(),
+            _winner(),
+            _board(context),
+          ],
+        ),
       ),
     );
   }
@@ -61,14 +63,11 @@ class RecordScreen extends StatelessWidget {
   Hero _board(BuildContext context) {
     return Hero(
       tag: 'board_${recordModel.id!}',
-      child: Padding(
-        padding: const EdgeInsets.all(2.5),
-        child: ResultBoard(
-          context,
-          boardSize: recordModel.boardSize,
-          recordModel: recordModel,
-          isSmall: false,
-        ),
+      child: ResultBoard(
+        context,
+        boardSize: recordModel.boardSize,
+        recordModel: recordModel,
+        isSmall: false,
       ),
     );
   }

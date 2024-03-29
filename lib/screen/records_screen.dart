@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
-import 'package:tic_tac_toe_app/utils/alert_dialog.dart';
-import 'package:tic_tac_toe_app/constants.dart';
-import 'package:tic_tac_toe_app/controllers/records_controller.dart';
-import 'package:tic_tac_toe_app/widgets/records/record_card.dart';
-import 'package:tic_tac_toe_app/screens/record_screen.dart';
+import 'package:tic_tac_toe_app/util/alert_dialog.dart';
+import 'package:tic_tac_toe_app/constant/text_styles.dart';
+import 'package:tic_tac_toe_app/controller/records_controller.dart';
+import 'package:tic_tac_toe_app/widget/records/record_card.dart';
+import 'package:tic_tac_toe_app/screen/record_screen.dart';
 
 class RecordsScreen extends GetView<RecordsController> {
   const RecordsScreen({super.key});

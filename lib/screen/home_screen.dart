@@ -2,13 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:tic_tac_toe_app/widgets/animation_state.dart';
-import 'package:tic_tac_toe_app/controllers/records_controller.dart';
-import 'package:tic_tac_toe_app/screens/records_screen.dart';
-import 'package:tic_tac_toe_app/screens/setting_screen.dart';
-import 'package:tic_tac_toe_app/controllers/setting_controller.dart';
-import 'package:tic_tac_toe_app/utils/error_snackbar.dart';
-import 'package:tic_tac_toe_app/widgets/simple_button.dart';
+import 'package:tic_tac_toe_app/widget/animation_state.dart';
+import 'package:tic_tac_toe_app/controller/records_controller.dart';
+import 'package:tic_tac_toe_app/screen/records_screen.dart';
+import 'package:tic_tac_toe_app/screen/setting_screen.dart';
+import 'package:tic_tac_toe_app/controller/setting_controller.dart';
+import 'package:tic_tac_toe_app/util/error_snackbar.dart';
+import 'package:tic_tac_toe_app/widget/simple_button.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

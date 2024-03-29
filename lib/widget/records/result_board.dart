@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tic_tac_toe_app/models/record_model.dart';
+import 'package:get/get.dart';
+import 'package:tic_tac_toe_app/model/record_model.dart';
 
 class ResultBoard extends StatelessWidget {
   final BuildContext context;
@@ -72,44 +72,44 @@ class ResultBoard extends StatelessWidget {
 Widget resultBoardBox(
     context, int x, int y, int boardSize, Map<String, int> recordData,
     {IconData? icon, Color? color, required bool isSmall}) {
-  return Center(
+  double boardWidth = Get.width;
+  return Container(
+    color: Colors.white,
+    width: boardWidth / boardSize,
+    height: boardWidth / boardSize,
     child: Container(
-      color: Colors.white,
-      child: Container(
-        decoration: BoxDecoration(
-            border: isSmall
-                ? Border.all(color: Colors.black, width: 1)
-                : Border.all(color: Colors.blueGrey, width: 3)),
-        width: 393.w / boardSize,
-        height: 393.w / boardSize,
-        child: LayoutBuilder(
-          builder: (context, constraints) => Stack(
-            alignment: Alignment.center,
-            children: [
-              Icon(
-                icon,
-                size: constraints.maxWidth * 0.8, // container의 사이즈에 맞게 동적 조절
-                color: color,
-              ),
-              isSmall
-                  ? Container()
-                  : Positioned(
-                      top: 2,
-                      right: 2,
-                      child: Material( // Hero에 사용할 수 없는 Text 위젯을 사용하기 위해 Material 속성을 부여
-                        type: MaterialType.transparency,
-                        child: Text(
-                          recordData['($x,$y)'] == 0
-                              ? ''
-                              : recordData['($x,$y)'].toString(),
-                          style: const TextStyle(
-                            decoration: TextDecoration.none,
-                          ),
+      decoration: BoxDecoration(
+          border: isSmall
+              ? Border.all(color: Colors.black, width: 1)
+              : Border.all(color: Colors.blueGrey, width: 3)),
+      child: LayoutBuilder(
+        builder: (context, constraints) => Stack(
+          alignment: Alignment.center,
+          children: [
+            Icon(
+              icon,
+              size: constraints.maxWidth * 0.8, // container의 사이즈에 맞게 동적 조절
+              color: color,
+            ),
+            isSmall
+                ? Container()
+                : Positioned(
+                    top: 2,
+                    right: 2,
+                    child: Material(
+                      // Hero에 사용할 수 없는 Text 위젯을 사용하기 위해 Material 속성을 부여
+                      type: MaterialType.transparency,
+                      child: Text(
+                        recordData['($x,$y)'] == 0
+                            ? ''
+                            : recordData['($x,$y)'].toString(),
+                        style: const TextStyle(
+                          decoration: TextDecoration.none,
                         ),
                       ),
                     ),
-            ],
-          ),
+                  ),
+          ],
         ),
       ),
     ),

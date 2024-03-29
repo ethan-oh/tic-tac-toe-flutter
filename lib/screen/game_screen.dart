@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tic_tac_toe_app/widgets/home_button.dart';
-import 'package:tic_tac_toe_app/models/setting_model.dart';
-import 'package:tic_tac_toe_app/controllers/game_controller.dart';
-import 'package:tic_tac_toe_app/widgets/game/game_board.dart';
-import 'package:tic_tac_toe_app/widgets/game/menu_button.dart';
-import 'package:tic_tac_toe_app/screens/menu_screen.dart';
-import 'package:tic_tac_toe_app/widgets/game/player_info.dart';
+import 'package:tic_tac_toe_app/widget/home_button.dart';
+import 'package:tic_tac_toe_app/model/setting_model.dart';
+import 'package:tic_tac_toe_app/controller/game_controller.dart';
+import 'package:tic_tac_toe_app/widget/game/game_board.dart';
+import 'package:tic_tac_toe_app/widget/game/menu_button.dart';
+import 'package:tic_tac_toe_app/screen/menu_screen.dart';
+import 'package:tic_tac_toe_app/widget/game/player_info.dart';
 
 class GameScreen extends GetView<GameController> {
   final SettingModel settings;

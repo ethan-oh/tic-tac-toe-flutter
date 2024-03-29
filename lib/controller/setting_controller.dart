@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:tic_tac_toe_app/constants.dart';
-import 'package:tic_tac_toe_app/models/setting_model.dart';
+import 'package:tic_tac_toe_app/constant/enums.dart';
+import 'package:tic_tac_toe_app/model/setting_model.dart';
 
 class SettingController extends GetxController {
   // default 값 세팅
