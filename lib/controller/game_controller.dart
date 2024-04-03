@@ -8,7 +8,6 @@ import 'package:tic_tac_toe_app/model/db_helper.dart';
 import 'package:tic_tac_toe_app/model/record_model.dart';
 import 'package:tic_tac_toe_app/model/setting_model.dart';
 
-
 class GameController extends GetxController {
   final SettingModel settings;
   GameController(this.settings);
@@ -130,7 +129,9 @@ class GameController extends GetxController {
   }
 
 //////////////////////////////// 게임 플레이 //////////////////////////////////////////
-  bool boxClickAction(int x, int y) {
+  Future<bool> boxClickAction(int x, int y) async {
+    await Future.delayed(const Duration(milliseconds: 50));
+    print("박스 클릭");
     bool isEmpty = true;
     // 마커 놓은 후 무르기 버튼 비활성화 여부 체크
     gameStatus = GameStatus.playing;
@@ -191,6 +192,7 @@ class GameController extends GetxController {
 
   /// 무르기 버튼 액션 (활성화 되어있을때 기준)
   void playerOneBacksiesButtonAction() {
+    print("1 무르기 사용");
     isAlreadyUseBacksies = true;
     playerOneBackCount -= 1;
     iconList[lastPlayerOneX - 1][lastPlayerOneY - 1] = Icons.abc;
@@ -202,6 +204,7 @@ class GameController extends GetxController {
   }
 
   void playerTwoBacksiesButtonAction() {
+    print("2 무르기 사용");
     isAlreadyUseBacksies = true;
     playerTwoBackCount -= 1;
     iconList[lastPlayerTwoX - 1][lastPlayerTwoY - 1] = Icons.abc;
@@ -365,10 +368,10 @@ class GameController extends GetxController {
     RecordModel record = RecordModel(
         boardSize: gridCount,
         recordData: jsonEncode(recordData),
-        playerOneIconCode: RecordModel.getPlayerIconCode(playerOneMarker),
-        playerTwoIconCode: RecordModel.getPlayerIconCode(playerTwoMarker),
-        playerOneColorIndex: RecordModel.getPlayerColorIndex(playerOneColor),
-        playerTwoColorIndex: RecordModel.getPlayerColorIndex(playerTwoColor),
+        playerOneIconCode: RecordModel.convertIconToCode(playerOneMarker),
+        playerTwoIconCode: RecordModel.convertIconToCode(playerTwoMarker),
+        playerOneColorIndex: RecordModel.convertColorToCode(playerOneColor),
+        playerTwoColorIndex: RecordModel.convertColorToCode(playerTwoColor),
         isPlayerOneStartFirst: isPlayerOneStartFirst ? 1 : 0,
         align: alignCount,
         playerOneRemainBackies: playerOneBackCount,
@@ -383,16 +386,16 @@ class GameController extends GetxController {
   void showMenu() {
     if (!isGameFinish()) {
       gameStatus = GameStatus.pause;
-    }else{
-      if (result == '무승부'){
+    } else {
+      if (result == '무승부') {
         gameStatus = GameStatus.draw;
-      } 
-      if (result == 'Player 1 승리'){
+      }
+      if (result == 'Player 1 승리') {
         gameStatus = GameStatus.playerOneWin;
-      } 
-      if (result == 'Player 2 승리'){
+      }
+      if (result == 'Player 2 승리') {
         gameStatus = GameStatus.playerTwoWin;
-      } 
+      }
     }
     update();
   }

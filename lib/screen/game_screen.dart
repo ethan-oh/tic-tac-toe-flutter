@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tic_tac_toe_app/widget/game/game_board.dart';
 import 'package:tic_tac_toe_app/widget/home_button.dart';
 import 'package:tic_tac_toe_app/model/setting_model.dart';
 import 'package:tic_tac_toe_app/controller/game_controller.dart';
-import 'package:tic_tac_toe_app/widget/game/game_board.dart';
 import 'package:tic_tac_toe_app/widget/game/menu_button.dart';
 import 'package:tic_tac_toe_app/screen/menu_screen.dart';
 import 'package:tic_tac_toe_app/widget/game/player_info.dart';
@@ -24,15 +24,21 @@ class GameScreen extends GetView<GameController> {
             actions: const [
               HomeButton(),
             ],
-            leading: MenuButton(controller: controller),
+            leading: const MenuButton(),
           ),
-          body: SafeArea(
+          body: const SafeArea(
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  _gameInfo(),
-                  _board(context),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      PlayerInfo(isPlayerOne: true),
+                      PlayerInfo(isPlayerOne: false),
+                    ],
+                  ),
+                  GameBoard(),
                 ],
               ),
             ),
@@ -40,30 +46,6 @@ class GameScreen extends GetView<GameController> {
         ),
         const MenuScreen(),
       ],
-    );
-  }
-
-  GetBuilder<GameController> _board(BuildContext context) {
-    return GetBuilder<GameController>(
-      builder: (_) => gameGridBoard(context),
-    );
-  }
-
-  GetBuilder<GameController> _gameInfo() {
-    return GetBuilder<GameController>(
-      builder: (_) => Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          playerOneInfo(
-            color:
-                controller.isPlayerOneTurn ? Colors.white : Colors.black.withOpacity(0.05),
-          ),
-          playerTwoInfo(
-            color:
-                controller.isPlayerOneTurn ? Colors.black.withOpacity(0.05) : Colors.white,
-          ),
-        ],
-      ),
     );
   }
 }

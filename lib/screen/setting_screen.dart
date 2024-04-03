@@ -7,7 +7,6 @@ import 'package:tic_tac_toe_app/screen/game_screen.dart';
 import 'package:tic_tac_toe_app/controller/game_controller.dart';
 import 'package:tic_tac_toe_app/controller/setting_controller.dart';
 import 'package:tic_tac_toe_app/widget/setting/segment_widgets.dart';
-import 'package:tic_tac_toe_app/util/error_snackbar.dart';
 import 'package:tic_tac_toe_app/widget/simple_button.dart';
 
 class SettingScreen extends GetView<SettingController> {
@@ -27,14 +26,16 @@ class SettingScreen extends GetView<SettingController> {
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: Column(
-            children: [
-              _gridSetting(),
-              _alignSetting(),
-              _markerSetting(isPlayerOne: true),
-              _markerSetting(isPlayerOne: false),
-              _turnSetting(),
-            ],
+          child: Center(
+            child: Column(
+              children: [
+                _gridSetting(),
+                _alignSetting(),
+                _markerSetting(isPlayerOne: true),
+                _markerSetting(isPlayerOne: false),
+                _turnSetting(),
+              ],
+            ),
           ),
         ),
       ),
@@ -52,10 +53,10 @@ class SettingScreen extends GetView<SettingController> {
           color: Colors.indigo[900],
           onPressed: () => Get.to(
             () => GameScreen(
-              settings: controller.retriveCurrentSetting(),
+              settings: controller.getCurrentSetting(),
             ),
             binding: BindingsBuilder(() {
-              Get.put(GameController(controller.retriveCurrentSetting()));
+              Get.put(GameController(controller.getCurrentSetting()));
             }),
             transition: Transition.zoom,
           ),
@@ -97,23 +98,15 @@ class SettingScreen extends GetView<SettingController> {
             groupValue: isPlayerOne
                 ? controller.markerOneSegmentValue
                 : controller.markerTwoSegmentValue,
-            onValueChanged: (value) {
-              bool isImpossible = isPlayerOne
-                  ? controller.setMarker(
-                      value: value,
-                      isFirstMarker: true,
-                    )
-                  : controller.setMarker(
-                      value: value,
-                      isFirstMarker: false,
-                    );
-              if (isImpossible) {
-                showErrorSnackBar(
-                  title: '불가능',
-                  message: '상대방과 동일한 마커는 선택 불가능합니다.',
-                );
-              }
-            },
+            onValueChanged: (value) => isPlayerOne
+                ? controller.setMarker(
+                    value: value,
+                    isFirstMarker: true,
+                  )
+                : controller.setMarker(
+                    value: value,
+                    isFirstMarker: false,
+                  ),
             children: {
               MarkerOpt.cross: iconSegmentWidget(Icons.close),
               MarkerOpt.circle: iconSegmentWidget(Icons.circle_outlined),
@@ -127,23 +120,16 @@ class SettingScreen extends GetView<SettingController> {
             groupValue: isPlayerOne
                 ? controller.colorOneSegmentValue
                 : controller.colorTwoSegmentValue,
-            onValueChanged: (value) {
-              bool isImpossible = isPlayerOne
-                  ? controller.setColor(
-                      value: value,
-                      isFirstColor: true,
-                    )
-                  : controller.setColor(
-                      value: value,
-                      isFirstColor: false,
-                    );
-              if (isImpossible) {
-                showErrorSnackBar(
-                  title: '불가능',
-                  message: '상대방과 동일한 색상은 선택 불가능합니다.',
-                );
-              }
-            },
+            backgroundColor: Colors.grey,
+            onValueChanged: (value) => isPlayerOne
+                ? controller.setColor(
+                    value: value,
+                    isFirstColor: true,
+                  )
+                : controller.setColor(
+                    value: value,
+                    isFirstColor: false,
+                  ),
             children: {
               ColorOpt.blue: colorSegmentWidget(Colors.indigo),
               ColorOpt.red: colorSegmentWidget(const Color(0xFFD32F2F)),
@@ -163,12 +149,7 @@ class SettingScreen extends GetView<SettingController> {
         GetBuilder<SettingController>(
           builder: (_) => CupertinoSlidingSegmentedControl(
             groupValue: controller.alignSegmentValue,
-            onValueChanged: (value) {
-              bool isImpossible = controller.setAlign(value);
-              if (isImpossible) {
-                showErrorSnackBar(title: '불가능', message: '게임판 크기를 벗어난 승리조건입니다!!');
-              }
-            },
+            onValueChanged: (value) => controller.setAlign(value),
             children: {
               AlignOpt.three: segmentWidget('3칸'),
               AlignOpt.four: segmentWidget('4칸'),

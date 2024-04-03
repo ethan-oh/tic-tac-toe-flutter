@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:tic_tac_toe_app/widget/animation_state.dart';
+import 'package:tic_tac_toe_app/widget/animation_logo.dart';
 import 'package:tic_tac_toe_app/controller/records_controller.dart';
 import 'package:tic_tac_toe_app/screen/records_screen.dart';
 import 'package:tic_tac_toe_app/screen/setting_screen.dart';
@@ -23,7 +23,11 @@ class HomeScreen extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  _logoImage(),
+                  Container(
+                    padding: EdgeInsets.only(bottom: 100.h),
+                    constraints: const BoxConstraints(maxHeight: 500),
+                    child: const AnimationLogo(),
+                  ),
                   Column(
                     children: [
                       _startButton(),
@@ -33,24 +37,6 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _logoImage() {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 100.h),
-      child: AnimationState(
-        builder: (state) => AnimatedScale(
-          curve: Curves.linear,
-          duration: const Duration(milliseconds: 1000),
-          scale: state ? 1 : 0.95,
-          child: Image.asset(
-            'assets/images/game_logo.png',
-            // height: 300,
-            fit: BoxFit.cover,
           ),
         ),
       ),

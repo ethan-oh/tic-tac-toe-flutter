@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:tic_tac_toe_app/constant/text_styles.dart';
 
 Widget segmentWidget(String option, {double? width}) {
   return Container(
@@ -10,10 +11,7 @@ Widget segmentWidget(String option, {double? width}) {
       children: [
         Text(
           option,
-          style: const TextStyle(
-            fontSize: 18,
-            color: Colors.black,
-          ),
+          style: segmentTextStyle,
         ),
       ],
     ),
@@ -38,7 +36,7 @@ Widget colorSegmentWidget(Color color) {
     width: kIsWeb ? 200 * 3 / 4 : double.maxFinite,
     padding: const EdgeInsets.symmetric(vertical: 5),
     child: Icon(
-      Icons.rectangle,
+      Icons.rectangle_rounded,
       size: 25,
       color: color,
     ),

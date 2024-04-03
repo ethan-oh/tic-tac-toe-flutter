@@ -18,7 +18,6 @@ class DBHelper {
     );
   }
 
-
   static Future<List<RecordModel>> fetchAllRecords() async {
     final Database db = await initializeDB();
     final List<Map<String, Object?>> queryResults =
@@ -26,7 +25,6 @@ class DBHelper {
 
     return queryResults.map((e) => RecordModel.fromJson(e)).toList();
   }
-
 
   static Future<void> insertRecord(RecordModel record) async {
     final Database db = await initializeDB();
@@ -52,7 +50,7 @@ class DBHelper {
   static Future<void> deleteRecordById(int id) async {
     final Database db = await initializeDB();
     await db.rawDelete(
-      'delete from records where id = ?', 
+      'delete from records where id = ?',
       [id], // []안의 값이 ?값
     );
   }

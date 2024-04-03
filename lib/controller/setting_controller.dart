@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:tic_tac_toe_app/constant/enums.dart';
 import 'package:tic_tac_toe_app/model/setting_model.dart';
+import 'package:tic_tac_toe_app/util/error_snackbar.dart';
 
 class SettingController extends GetxController {
   // default 값 세팅
@@ -33,57 +34,64 @@ class SettingController extends GetxController {
   void setTurn(TurnOpt? value) {
     if (value != null) {
       _turnSegmentValue = value;
-      // 그리드 선택에 따른 승리 조건 제한
       update();
     }
   }
 
-  bool setAlign(AlignOpt? value) {
+  void setAlign(AlignOpt? value) {
     if (value != null) {
       bool isValid = _isAlignValid(_gridSegmentValue, value);
       if (isValid) {
         _alignSegmentValue = value;
-        update();
+      } else {
+        showErrorSnackBar(
+          title: '불가능',
+          message: '게임판 크기를 벗어난 승리조건입니다!!',
+        );
       }
-      return !isValid;
+      update();
     }
-    return false;
   }
 
-  bool setMarker({required MarkerOpt? value, required bool isFirstMarker}) {
+  void setMarker({required MarkerOpt? value, required bool isFirstMarker}) {
     if (value != null) {
-      bool isValid = _isMarkerValid(
-          _markerOneSegmentValue, _markerTwoSegmentValue, value);
+      bool isValid =
+          _isMarkerValid(_markerOneSegmentValue, _markerTwoSegmentValue, value);
       if (isValid) {
         if (isFirstMarker) {
           _markerOneSegmentValue = value;
         } else {
           _markerTwoSegmentValue = value;
         }
-        update();
+      } else {
+        showErrorSnackBar(
+          title: '불가능',
+          message: '상대방과 동일한 마커는 선택 불가능합니다.',
+        );
       }
-      return !isValid;
+      update();
     }
-    return false;
   }
 
-  bool setColor({required ColorOpt? value, required bool isFirstColor}) {
+  void setColor({required ColorOpt? value, required bool isFirstColor}) {
     if (value != null) {
-      bool isValid = _isColorValid(
-          _colorOneSegmentValue, _colorTwoSegmentValue, value);
+      bool isValid =
+          _isColorValid(_colorOneSegmentValue, _colorTwoSegmentValue, value);
       if (isValid) {
         if (isFirstColor) {
           _colorOneSegmentValue = value;
         } else {
           _colorTwoSegmentValue = value;
         }
-        update();
+      } else {
+        showErrorSnackBar(
+          title: '불가능',
+          message: '상대방과 동일한 색상은 선택 불가능합니다.',
+        );
       }
-      return !isValid;
+      update();
     }
-    return false;
   }
-
 
   void resetSetting() {
     _gridSegmentValue = GridOpt.threeByThree;
@@ -96,7 +104,8 @@ class SettingController extends GetxController {
     update();
   }
 
-  SettingModel retriveCurrentSetting() {
+  // gameController에 전달하기 위한 setting 모델 생성.
+  SettingModel getCurrentSetting() {
     return SettingModel(
       gridCount: _gridSegmentValue.value,
       alignCount: _alignSegmentValue.value,

@@ -24,52 +24,38 @@ class RecordScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            _winConditionText(),
-            _resultInfo(),
-            _winner(),
-            _board(context),
+            Text(
+              '승리조건 : ${recordModel.align}칸 완성',
+              style: smallTextStyle,
+            ),
+            Row(
+              children: [
+                ResultPlayerInfo(recordModel: recordModel, playerOne: true),
+                ResultPlayerInfo(recordModel: recordModel, playerOne: false),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Material(
+                type: MaterialType.transparency,
+                child: Text(
+                  recordModel.result,
+                  style: normalTextStyle,
+                ),
+              ),
+            ),
+            Hero(
+              tag: 'board_${recordModel.id!}',
+              child: ResultBoard(
+                context,
+                boardSize: recordModel.boardSize,
+                recordModel: recordModel,
+                isSmall: false,
+              ),
+            ),
           ],
         ),
       ),
     );
   }
-
-  Row _resultInfo() {
-    return Row(
-      children: [
-        ResultPlayerInfo(recordModel: recordModel, playerOne: true),
-        ResultPlayerInfo(recordModel: recordModel, playerOne: false),
-      ],
-    );
-  }
-
-  Text _winConditionText() {
-    return Text(
-      '승리조건 : ${recordModel.align}칸 완성',
-      style: smallTextStyle,
-    );
-  }
-
-  Padding _winner() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Material(
-        type: MaterialType.transparency,
-        child: Text(recordModel.result, style: normalTextStyle),
-      ),
-    );
-  }
-
-  Hero _board(BuildContext context) {
-    return Hero(
-      tag: 'board_${recordModel.id!}',
-      child: ResultBoard(
-        context,
-        boardSize: recordModel.boardSize,
-        recordModel: recordModel,
-        isSmall: false,
-      ),
-    );
-  }
 }
-

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const TextStyle buttonStyle = TextStyle(
+const TextStyle buttonTextStyle = TextStyle(
     fontFamily: 'Jalnan2',
     // fontWeight: FontWeight.bold,
     color: Colors.white,
@@ -42,4 +42,9 @@ const TextStyle dateTimeTextStyle = TextStyle(
   decoration: TextDecoration.none, // scafold 안에 없기 때문에 스타일 안 준다.
   color: Colors.black54,
   fontSize: 13,
+);
+
+const TextStyle segmentTextStyle = TextStyle(
+  fontSize: 18,
+  color: Colors.black,
 );

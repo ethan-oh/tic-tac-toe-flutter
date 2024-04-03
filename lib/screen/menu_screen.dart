@@ -15,22 +15,20 @@ class MenuScreen extends GetView<GameController> {
   Widget build(BuildContext context) {
     return GetBuilder<GameController>(
       builder: (controller) => Visibility(
-        visible: (controller.isMenuVisible()),
+        visible: controller.isMenuVisible(),
         child: Container(
           color: Colors.black54,
           alignment: Alignment.center,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              GetBuilder<GameController>(
-                builder: (controller) => resultText(controller),
-              ),
+              resultText(controller),
               const SizedBox(
                 height: 60,
               ),
-              _backButton(),
+              _backButton(controller),
               _reStartButton(controller),
-              _saveButton(),
+              _saveButton(controller),
               _homeButton(),
             ],
           ),
@@ -39,14 +37,12 @@ class MenuScreen extends GetView<GameController> {
     );
   }
 
-  GetBuilder<GameController> _backButton() {
-    return GetBuilder<GameController>(
-      builder: (controller) => SimpleButton(
-        title: controller.isGameFinish() ? '결과 보기' : '돌아가기',
-        color: Colors.transparent,
-        elevation: 0,
-        onPressed: () => controller.hideMenu(),
-      ),
+  SimpleButton _backButton(GameController controller) {
+    return SimpleButton(
+      title: controller.isGameFinish() ? '결과 보기' : '돌아가기',
+      color: Colors.transparent,
+      elevation: 0,
+      onPressed: () => controller.hideMenu(),
     );
   }
 
@@ -68,12 +64,11 @@ class MenuScreen extends GetView<GameController> {
     );
   }
 
-  GetBuilder _saveButton() {
-    return GetBuilder<GameController>(
-      builder: (controller) => Visibility(
-        visible: controller.isGameFinish(),
-        child: SimpleButton(
-          onPressed: () => (!kIsWeb)
+  Widget _saveButton(GameController controller) {
+    return Visibility(
+      visible: controller.isGameFinish(),
+      child: SimpleButton(
+        onPressed: () => (!kIsWeb)
               ? showAlertDialog(
                   title: '저장',
                   middleText: '게임 기록을 저장하시겠습니까?',
@@ -87,10 +82,9 @@ class MenuScreen extends GetView<GameController> {
                   title: '경고',
                   message: '모바일 앱에서만 사용 가능한 기능입니다.',
                 ),
-          title: '기록하기',
-          color: Colors.transparent,
-          elevation: 0,
-        ),
+        title: '기록하기',
+        color: Colors.transparent,
+        elevation: 0,
       ),
     );
   }

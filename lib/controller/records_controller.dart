@@ -19,14 +19,6 @@ class RecordsController extends GetxController {
     update();
   }
 
-  String convertBoardCountToString(int boardSize) {
-    return boardSize == 3
-        ? '3X3'
-        : boardSize == 4
-            ? '4X4'
-            : '5X5';
-  }
-
   Future<void> deleteRecordById(int id) async {
     await DBHelper.deleteRecordById(id);
     fethcAllRecords();

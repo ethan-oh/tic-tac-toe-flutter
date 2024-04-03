@@ -9,9 +9,9 @@ Widget boardBox(context, int x, int y, {IconData? icon}) {
 
   double boardWidth = (kIsWeb) ? (Get.height - 173) * 0.8 : Get.width;
   return GestureDetector(
-    onTap: () {
+    onTap: () async{
       if (!controller.isGameFinish()) {
-        bool isEmptyBox = controller.boxClickAction(x, y);
+        bool isEmptyBox = await controller.boxClickAction(x, y);
         if (!isEmptyBox) {
           showErrorSnackBar(
             title: '안돼요!!',

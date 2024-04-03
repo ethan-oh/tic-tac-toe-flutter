@@ -24,7 +24,7 @@ class SimpleButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: Container(
-        constraints: const BoxConstraints(maxWidth: 400),
+        constraints: const BoxConstraints(maxWidth: 600),
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
@@ -48,7 +48,7 @@ class SimpleButton extends StatelessWidget {
               )),
           child: Text(
             title,
-            style: textStyle ?? buttonStyle,
+            style: textStyle ?? buttonTextStyle,
           ),
         ),
       ),

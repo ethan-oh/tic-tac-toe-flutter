@@ -34,11 +34,11 @@ class ResultPlayerInfo extends StatelessWidget {
           ),
           Icon(
             playerOne
-                ? recordModel.getPlayerOneIcon()
-                : recordModel.getPlayerTwoIcon(),
+                ? recordModel.playerOneIcon
+                : recordModel.playerTwoIcon,
             color: playerOne
-                ? recordModel.getPlayerOneColor()
-                : recordModel.getPlayerTwoColor(),
+                ? recordModel.playerOneColor
+                : recordModel.playerTwoColor,
             size: 70,
           ),
         ],

@@ -32,25 +32,25 @@ class ResultBoard extends StatelessWidget {
           icon = recordData['($i,$j)']! == 0
               ? Icons.abc
               : (recordData['($i,$j)']! % 2 == 0)
-                  ? recordModel.getPlayerTwoIcon()
-                  : recordModel.getPlayerOneIcon();
+                  ? recordModel.playerTwoIcon
+                  : recordModel.playerOneIcon;
           color = recordData['($i,$j)']! == 0
               ? Colors.transparent
               : (recordData['($i,$j)']! % 2 == 0)
-                  ? recordModel.getPlayerTwoColor()
-                  : recordModel.getPlayerOneColor();
+                  ? recordModel.playerTwoColor
+                  : recordModel.playerOneColor;
         } else {
           // 홀수가 player2
           icon = recordData['($i,$j)']! == 0
               ? Icons.abc
               : (recordData['($i,$j)']! % 2 == 0)
-                  ? recordModel.getPlayerOneIcon()
-                  : recordModel.getPlayerTwoIcon();
+                  ? recordModel.playerOneIcon
+                  : recordModel.playerTwoIcon;
           color = recordData['($i,$j)']! == 0
               ? Colors.transparent
               : (recordData['($i,$j)']! % 2 == 0)
-                  ? recordModel.getPlayerOneColor()
-                  : recordModel.getPlayerTwoColor();
+                  ? recordModel.playerOneColor
+                  : recordModel.playerTwoColor;
         }
 
         boxList.add(

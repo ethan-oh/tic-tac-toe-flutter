@@ -64,7 +64,7 @@ class RecordModel {
     return '$year.$month.$day  $hour:$minute';
   }
 
-  IconData getPlayerOneIcon() {
+  IconData get playerOneIcon {
     switch (playerOneIconCode) {
       case 1:
         return Icons.circle_outlined;
@@ -79,7 +79,7 @@ class RecordModel {
     }
   }
 
-  IconData getPlayerTwoIcon() {
+  IconData get playerTwoIcon {
     switch (playerTwoIconCode) {
       case 1:
         return Icons.circle_outlined;
@@ -94,7 +94,7 @@ class RecordModel {
     }
   }
 
-  Color getPlayerOneColor() {
+  Color get playerOneColor {
     switch (playerOneColorIndex) {
       case 1:
         return Colors.indigo;
@@ -109,7 +109,7 @@ class RecordModel {
     }
   }
 
-  Color getPlayerTwoColor() {
+  Color get playerTwoColor {
     switch (playerTwoColorIndex) {
       case 1:
         return Colors.indigo;
@@ -139,7 +139,8 @@ class RecordModel {
     return resultMap;
   }
 
-  static int getPlayerIconCode(IconData iconData) {
+  // 모델 저장 시 IconData값을 받아와 int값인 코드로 변환. DB 저장 위해
+  static int convertIconToCode(IconData iconData) {
     switch (iconData) {
       case Icons.circle_outlined:
         return 1;
@@ -154,7 +155,7 @@ class RecordModel {
     }
   }
 
-  static int getPlayerColorIndex(Color color) {
+  static int convertColorToCode(Color color) {
     switch (color) {
       case Colors.indigo:
         return 1;
