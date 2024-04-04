@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:tic_tac_toe_app/constant/enums.dart';
 
 class SettingModel {
-  final int gridCount;
-  final int alignCount;
-  final IconData playerOneMarker;
-  final Color playerOneColor;
-  final IconData playerTwoMarker;
-  final Color playerTwoColor;
-  final TurnOpt firstPlayer;
+  int gridCount;
+  int alignCount;
+  IconData playerOneMarker;
+  Color playerOneColor;
+  IconData playerTwoMarker;
+  Color playerTwoColor;
+  TurnOpt firstPlayer;
 
   SettingModel({
     required this.gridCount,
@@ -19,4 +19,8 @@ class SettingModel {
     required this.playerTwoColor,
     required this.firstPlayer,
   });
+
+  setGrid(int value){
+    gridCount = value;
+  }
 }

@@ -33,11 +33,11 @@ class PlayerInfo extends StatelessWidget {
               ElevatedButton(
                 onPressed: (isPlayerOne)
                     ? controller.isPlayerOneBacksiesButtonDisable ||
-                            controller.isGameFinish()
+                            controller.isGameFinish
                         ? null
                         : () => controller.playerOneBacksiesButtonAction()
                     : controller.isPlayerTwoBacksiesButtonDisable ||
-                            controller.isGameFinish()
+                            controller.isGameFinish
                         ? null
                         : () => controller.playerTwoBacksiesButtonAction(),
                 child: const Text('무르기'),

@@ -5,8 +5,8 @@ enum GridOpt {
   fourByFour(4),
   fiveByFive(5);
 
-  const GridOpt(this.value);
-  final int value;
+  const GridOpt(this.grid);
+  final int grid;
 }
 
 enum AlignOpt {
@@ -14,8 +14,8 @@ enum AlignOpt {
   four(4),
   five(5);
 
-  const AlignOpt(this.value);
-  final int value;
+  const AlignOpt(this.align);
+  final int align;
   static AlignOpt fromInt(int value) {
     switch (value) {
       case 3:
@@ -36,8 +36,8 @@ enum MarkerOpt {
   triangle(Icons.change_history),
   rectangle(Icons.square_outlined);
 
-  const MarkerOpt(this.value);
-  final IconData value;
+  const MarkerOpt(this.marker);
+  final IconData marker;
 }
 
 enum ColorOpt {
@@ -46,8 +46,8 @@ enum ColorOpt {
   green(Colors.green),
   orange(Colors.orange);
 
-  const ColorOpt(this.value);
-  final Color value;
+  const ColorOpt(this.color);
+  final Color color;
 }
 
 enum TurnOpt { random, playerOne, playerTwo }

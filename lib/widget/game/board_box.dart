@@ -10,7 +10,7 @@ Widget boardBox(context, int x, int y, {IconData? icon}) {
   double boardWidth = (kIsWeb) ? (Get.height - 173) * 0.8 : Get.width;
   return GestureDetector(
     onTap: () async{
-      if (!controller.isGameFinish()) {
+      if (!controller.isGameFinish) {
         bool isEmptyBox = await controller.boxClickAction(x, y);
         if (!isEmptyBox) {
           showErrorSnackBar(
@@ -45,7 +45,7 @@ Widget boardBox(context, int x, int y, {IconData? icon}) {
                         : controller.playerTwoColor,
               ),
               Visibility(
-                visible: controller.isGameFinish(),
+                visible: controller.isGameFinish,
                 child: Positioned(
                   top: 2,
                   right: 2,

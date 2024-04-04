@@ -69,9 +69,9 @@ class SettingScreen extends GetView<SettingController> {
     return Column(
       children: [
         _settingTitle('선공'),
-        GetBuilder<SettingController>(
-          builder: (_) => CupertinoSlidingSegmentedControl(
-            groupValue: controller.turnSegmentValue,
+        Obx(
+          () => CupertinoSlidingSegmentedControl(
+            groupValue: controller.turn,
             onValueChanged: (value) => controller.setTurn(value),
             children: {
               TurnOpt.random: segmentWidget(
@@ -90,14 +90,14 @@ class SettingScreen extends GetView<SettingController> {
     return Column(
       children: [
         _settingTitle('Player ${isPlayerOne ? '1' : '2'} 마커'),
-        GetBuilder<SettingController>(
-          builder: (_) => CupertinoSlidingSegmentedControl(
+        Obx(
+          () => CupertinoSlidingSegmentedControl(
             thumbColor: isPlayerOne
-                ? controller.colorOneSegmentValue.value
-                : controller.colorTwoSegmentValue.value,
+                ? controller.playerOneColor.color
+                : controller.playerTwoColor.color,
             groupValue: isPlayerOne
-                ? controller.markerOneSegmentValue
-                : controller.markerTwoSegmentValue,
+                ? controller.playerOneMarker
+                : controller.playerTwomarker,
             onValueChanged: (value) => isPlayerOne
                 ? controller.setMarker(
                     value: value,
@@ -115,11 +115,11 @@ class SettingScreen extends GetView<SettingController> {
             },
           ),
         ),
-        GetBuilder<SettingController>(
-          builder: (_) => CupertinoSlidingSegmentedControl(
+        Obx(
+          () => CupertinoSlidingSegmentedControl(
             groupValue: isPlayerOne
-                ? controller.colorOneSegmentValue
-                : controller.colorTwoSegmentValue,
+                ? controller.playerOneColor
+                : controller.playerTwoColor,
             backgroundColor: Colors.grey,
             onValueChanged: (value) => isPlayerOne
                 ? controller.setColor(
@@ -146,9 +146,9 @@ class SettingScreen extends GetView<SettingController> {
     return Column(
       children: [
         _settingTitle('승리 조건'),
-        GetBuilder<SettingController>(
-          builder: (_) => CupertinoSlidingSegmentedControl(
-            groupValue: controller.alignSegmentValue,
+        Obx(
+          () => CupertinoSlidingSegmentedControl(
+            groupValue: controller.align,
             onValueChanged: (value) => controller.setAlign(value),
             children: {
               AlignOpt.three: segmentWidget('3칸'),
@@ -165,9 +165,9 @@ class SettingScreen extends GetView<SettingController> {
     return Column(
       children: [
         _settingTitle('게임판 크기'),
-        GetBuilder<SettingController>(
-          builder: (_) => CupertinoSlidingSegmentedControl(
-            groupValue: controller.gridSegmentValue,
+        Obx(
+          () => CupertinoSlidingSegmentedControl(
+            groupValue: controller.grid,
             onValueChanged: (value) => controller.setGrid(value),
             children: {
               GridOpt.threeByThree: segmentWidget('3 X 3'),

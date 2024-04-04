@@ -5,63 +5,61 @@ import 'package:tic_tac_toe_app/util/error_snackbar.dart';
 
 class SettingController extends GetxController {
   // default 값 세팅
-  TurnOpt _turnSegmentValue = TurnOpt.random;
-  GridOpt _gridSegmentValue = GridOpt.threeByThree;
-  AlignOpt _alignSegmentValue = AlignOpt.three;
-  MarkerOpt _markerOneSegmentValue = MarkerOpt.cross;
-  MarkerOpt _markerTwoSegmentValue = MarkerOpt.circle;
-  ColorOpt _colorOneSegmentValue = ColorOpt.blue;
-  ColorOpt _colorTwoSegmentValue = ColorOpt.red;
+  final Rx<TurnOpt> _turn = TurnOpt.random.obs;
+  final Rx<GridOpt> _grid = GridOpt.threeByThree.obs;
+  final Rx<AlignOpt> _align = AlignOpt.three.obs;
+  final Rx<MarkerOpt> _playerOneMarker = MarkerOpt.cross.obs;
+  final Rx<MarkerOpt> _playerTwomarker = MarkerOpt.circle.obs;
+  final Rx<ColorOpt> _playerOneColor = ColorOpt.blue.obs;
+  final Rx<ColorOpt> _playerTwoColor = ColorOpt.red.obs;
 
   // getter
-  TurnOpt get turnSegmentValue => _turnSegmentValue;
-  GridOpt get gridSegmentValue => _gridSegmentValue;
-  AlignOpt get alignSegmentValue => _alignSegmentValue;
-  MarkerOpt get markerOneSegmentValue => _markerOneSegmentValue;
-  MarkerOpt get markerTwoSegmentValue => _markerTwoSegmentValue;
-  ColorOpt get colorOneSegmentValue => _colorOneSegmentValue;
-  ColorOpt get colorTwoSegmentValue => _colorTwoSegmentValue;
+  TurnOpt get turn => _turn.value;
+  GridOpt get grid => _grid.value;
+  AlignOpt get align => _align.value;
+  MarkerOpt get playerOneMarker => _playerOneMarker.value;
+  MarkerOpt get playerTwomarker => _playerTwomarker.value;
+  ColorOpt get playerOneColor => _playerOneColor.value;
+  ColorOpt get playerTwoColor => _playerTwoColor.value;
 
   void setGrid(GridOpt? value) {
     if (value != null) {
-      _alignSegmentValue = AlignOpt.three;
-      _gridSegmentValue = value;
+      _align.value = AlignOpt.three;
+      _grid.value = value;
       // 그리드 선택에 따른 승리 조건 제한
-      update();
+      
     }
   }
 
   void setTurn(TurnOpt? value) {
     if (value != null) {
-      _turnSegmentValue = value;
-      update();
+      _turn.value = value;
     }
   }
 
   void setAlign(AlignOpt? value) {
     if (value != null) {
-      bool isValid = _isAlignValid(_gridSegmentValue, value);
+      bool isValid = _isAlignValid(_grid.value, value);
       if (isValid) {
-        _alignSegmentValue = value;
+        _align.value = value;
       } else {
         showErrorSnackBar(
           title: '불가능',
           message: '게임판 크기를 벗어난 승리조건입니다!!',
         );
       }
-      update();
     }
   }
 
   void setMarker({required MarkerOpt? value, required bool isFirstMarker}) {
     if (value != null) {
       bool isValid =
-          _isMarkerValid(_markerOneSegmentValue, _markerTwoSegmentValue, value);
+          _isMarkerValid(_playerOneMarker.value, _playerTwomarker.value, value);
       if (isValid) {
         if (isFirstMarker) {
-          _markerOneSegmentValue = value;
+          _playerOneMarker.value = value;
         } else {
-          _markerTwoSegmentValue = value;
+          _playerTwomarker.value = value;
         }
       } else {
         showErrorSnackBar(
@@ -69,19 +67,18 @@ class SettingController extends GetxController {
           message: '상대방과 동일한 마커는 선택 불가능합니다.',
         );
       }
-      update();
     }
   }
 
   void setColor({required ColorOpt? value, required bool isFirstColor}) {
     if (value != null) {
       bool isValid =
-          _isColorValid(_colorOneSegmentValue, _colorTwoSegmentValue, value);
+          _isColorValid(_playerOneColor.value, _playerTwoColor.value, value);
       if (isValid) {
         if (isFirstColor) {
-          _colorOneSegmentValue = value;
+          _playerOneColor.value = value;
         } else {
-          _colorTwoSegmentValue = value;
+          _playerTwoColor.value = value;
         }
       } else {
         showErrorSnackBar(
@@ -89,31 +86,29 @@ class SettingController extends GetxController {
           message: '상대방과 동일한 색상은 선택 불가능합니다.',
         );
       }
-      update();
     }
   }
 
   void resetSetting() {
-    _gridSegmentValue = GridOpt.threeByThree;
-    _alignSegmentValue = AlignOpt.three;
-    _markerOneSegmentValue = MarkerOpt.cross;
-    _markerTwoSegmentValue = MarkerOpt.circle;
-    _colorOneSegmentValue = ColorOpt.blue;
-    _colorTwoSegmentValue = ColorOpt.red;
-    _turnSegmentValue = TurnOpt.random;
-    update();
+    _grid.value = GridOpt.threeByThree;
+    _align.value = AlignOpt.three;
+    _playerOneMarker.value = MarkerOpt.cross;
+    _playerTwomarker.value = MarkerOpt.circle;
+    _playerOneColor.value = ColorOpt.blue;
+    _playerTwoColor.value = ColorOpt.red;
+    _turn.value = TurnOpt.random;
   }
 
   // gameController에 전달하기 위한 setting 모델 생성.
   SettingModel getCurrentSetting() {
     return SettingModel(
-      gridCount: _gridSegmentValue.value,
-      alignCount: _alignSegmentValue.value,
-      playerOneMarker: _markerOneSegmentValue.value,
-      playerOneColor: _colorOneSegmentValue.value,
-      playerTwoMarker: _markerTwoSegmentValue.value,
-      playerTwoColor: _colorTwoSegmentValue.value,
-      firstPlayer: _turnSegmentValue,
+      gridCount: _grid.value.grid,
+      alignCount: _align.value.align,
+      playerOneMarker: _playerOneMarker.value.marker,
+      playerOneColor: _playerOneColor.value.color,
+      playerTwoMarker: _playerTwomarker.value.marker,
+      playerTwoColor: _playerTwoColor.value.color,
+      firstPlayer: _turn.value,
     );
   }
 

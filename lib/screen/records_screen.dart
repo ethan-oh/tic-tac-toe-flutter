@@ -20,17 +20,16 @@ class RecordsScreen extends GetView<RecordsController> {
         ],
       ),
       body: Center(
-        child: GetBuilder<RecordsController>(
-          builder: (controller) => controller.records.isEmpty
-              ? emptyRecord()
-              : makeRecordList(controller),
+        child: Obx(
+          () => controller.records.isEmpty
+              ? _emptyList()
+              : _recordList(controller),
         ),
       ),
     );
   }
-  // scafold
 
-  Padding _deleteAllButton() {
+  Widget _deleteAllButton() {
     return Padding(
       padding: const EdgeInsets.only(right: 10),
       child: IconButton(
@@ -38,10 +37,12 @@ class RecordsScreen extends GetView<RecordsController> {
             ? showAlertDialog(
                 title: '삭제',
                 middleText: '기록을 모두 삭제하시겠습니까?',
-                onConfirm: () =>
-                    controller.deleteAllRecords().then((value) => Get.back()),
+                onConfirm: () async {
+                  controller.deleteAllRecords();
+                  Get.back();
+                },
               )
-            : null,
+            : null, // 기록이 없을 때는 아무 동작하지 않음.
         icon: Icon(
           Icons.delete,
           size: 35,
@@ -51,7 +52,7 @@ class RecordsScreen extends GetView<RecordsController> {
     );
   }
 
-  Center emptyRecord() {
+  Widget _emptyList() {
     return const Center(
       child: Text(
         '저장된 게임이 없습니다.',
@@ -60,7 +61,7 @@ class RecordsScreen extends GetView<RecordsController> {
     );
   }
 
-  ListView makeRecordList(RecordsController controller) {
+  ListView _recordList(RecordsController controller) {
     return ListView.builder(
       itemCount: controller.records.length,
       itemBuilder: (context, index) {

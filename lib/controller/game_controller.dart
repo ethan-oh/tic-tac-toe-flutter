@@ -9,9 +9,6 @@ import 'package:tic_tac_toe_app/model/record_model.dart';
 import 'package:tic_tac_toe_app/model/setting_model.dart';
 
 class GameController extends GetxController {
-  final SettingModel settings;
-  GameController(this.settings);
-
   @override
   void onInit() {
     super.onInit();
@@ -19,33 +16,28 @@ class GameController extends GetxController {
     _gameInit();
   }
 
-  // setting model을 통해 받아온 설정값을 변수에 저장
-  late final IconData playerOneMarker;
-  late final IconData playerTwoMarker;
-  late final Color playerOneColor;
-  late final Color playerTwoColor;
-  late final int gridCount;
-  late final int alignCount;
+  final SettingModel settings;
+  GameController(this.settings);
 
+  // setting model을 통해 받아온 설정값을 변수에 저장
+  late final IconData playerOneMarker, playerTwoMarker;
+  late final Color playerOneColor, playerTwoColor;
+  late final int gridCount, alignCount;
   // 2차원 Icon 리스트
   late List<List<IconData>> iconList;
   // 게임 턴 확인
   late bool isPlayerOneTurn;
   // 무르기버튼 비활성화 여부
-  late bool isPlayerOneBacksiesButtonDisable;
-  late bool isPlayerTwoBacksiesButtonDisable;
+  late bool isPlayerOneBacksiesButtonDisable, isPlayerTwoBacksiesButtonDisable;
 
   /// 현재 차례에 무르기 사용 여부 판단 (무르기 사용 후 그 전 턴까지 무르지 못하게 하기 위해)
   late bool isAlreadyUseBacksies;
   // 무르기 회수
-  late int playerOneBackCount;
-  late int playerTwoBackCount;
+  late int playerOneBackCount, playerTwoBackCount;
   // player1 마지막 놓은 좌표 저장 위한 변수
-  late int lastPlayerOneX;
-  late int lastPlayerOneY;
+  late int lastPlayerOneX, lastPlayerOneY;
   // player2 좌표 저장 변수
-  late int lastPlayerTwoX;
-  late int lastPlayerTwoY;
+  late int lastPlayerTwoX, lastPlayerTwoY;
   // 현재 게임 상태
   late GameStatus gameStatus;
   late String resultMessage;
@@ -56,20 +48,41 @@ class GameController extends GetxController {
   late bool isPlayerOneStartFirst;
   late String result;
 
+  /// 게임이 끝났는지 체크. 놓은 순서를 보일지 판단하기 위해 사용.
+  bool get isGameFinish {
+    return gameStatus == GameStatus.draw ||
+            gameStatus == GameStatus.playerOneWin ||
+            gameStatus == GameStatus.playerTwoWin ||
+            gameStatus == GameStatus.end
+        ? true
+        : false;
+  }
+
+  /// 게임중이거나 결과 확인중이면 메뉴를 보이지 않는다.
+  bool get isMenuVisible {
+    return gameStatus == GameStatus.playing || gameStatus == GameStatus.end
+        ? false
+        : true;
+  }
+
+  bool get isFirstPlayer {
+    return settings.firstPlayer == TurnOpt.playerOne
+        ? true
+        : settings.firstPlayer == TurnOpt.playerTwo
+            ? false
+            : Random().nextInt(2) == 1
+                ? true
+                : false;
+  }
+
   /////////////////////////// 게임 세팅 /////////////////////////////////
   void _gameInit() {
     isPlayerOneBacksiesButtonDisable = true;
     isPlayerTwoBacksiesButtonDisable = true;
     isAlreadyUseBacksies = false;
-    playerOneBackCount = 3;
-    playerTwoBackCount = 3;
-    lastPlayerOneX = 0;
-    lastPlayerOneY = 0;
-    lastPlayerTwoX = 0;
-    lastPlayerTwoY = 0;
-    playerOneBackCount = 3;
-    playerTwoBackCount = 3;
-    isPlayerOneTurn = setFirstPlayer();
+    playerOneBackCount = playerTwoBackCount = 3;
+    lastPlayerOneX = lastPlayerOneY = lastPlayerTwoX = lastPlayerTwoY = 0;
+    isPlayerOneTurn = isFirstPlayer;
     isPlayerOneStartFirst = isPlayerOneTurn; // 선공이 정해지면 저장 => 기록 위해서
     gameStatus = GameStatus.playing;
     index = 0;
@@ -102,16 +115,6 @@ class GameController extends GetxController {
         gridCount, (index) => List.generate(gridCount, ((index) => Icons.abc)));
   }
 
-  bool setFirstPlayer() {
-    return settings.firstPlayer == TurnOpt.playerOne
-        ? true
-        : settings.firstPlayer == TurnOpt.playerTwo
-            ? false
-            : Random().nextInt(2) == 1
-                ? true
-                : false;
-  }
-
   // 무르기 기능을 위한 마지막 놓은 좌표 저장
   void _saveLastPoint(int x, int y) {
     if (isPlayerOneTurn) {
@@ -130,8 +133,8 @@ class GameController extends GetxController {
 
 //////////////////////////////// 게임 플레이 //////////////////////////////////////////
   Future<bool> boxClickAction(int x, int y) async {
-    await Future.delayed(const Duration(milliseconds: 50));
-    print("박스 클릭");
+    await Future.delayed(
+        const Duration(microseconds: 100)); // 무르기 버튼과 동시에 눌렀을 때 꼬이는 상황 방지
     bool isEmpty = true;
     // 마커 놓은 후 무르기 버튼 비활성화 여부 체크
     gameStatus = GameStatus.playing;
@@ -148,18 +151,14 @@ class GameController extends GetxController {
       // * 저장 후에 순서 변경
       isPlayerOneTurn = !isPlayerOneTurn;
       isAlreadyUseBacksies = false;
-      _backsiesButtonDisableCheck();
+      _playerOneBacksiesButtonDisableCheck();
+      _playerTwoBacksiesButtonDisableCheck();
       _gameCheck();
     } else {
       isEmpty = false;
     }
     update();
     return isEmpty;
-  }
-
-  void _backsiesButtonDisableCheck() {
-    _playerOneBacksiesButtonDisableCheck();
-    _playerTwoBacksiesButtonDisableCheck();
   }
 
   void _playerOneBacksiesButtonDisableCheck() {
@@ -192,26 +191,26 @@ class GameController extends GetxController {
 
   /// 무르기 버튼 액션 (활성화 되어있을때 기준)
   void playerOneBacksiesButtonAction() {
-    print("1 무르기 사용");
     isAlreadyUseBacksies = true;
     playerOneBackCount -= 1;
     iconList[lastPlayerOneX - 1][lastPlayerOneY - 1] = Icons.abc;
     isPlayerOneTurn = !isPlayerOneTurn;
     index -= 1;
     recordData['($lastPlayerOneX,$lastPlayerOneY)'] = 0;
-    _backsiesButtonDisableCheck();
+    _playerOneBacksiesButtonDisableCheck();
+    _playerTwoBacksiesButtonDisableCheck();
     update();
   }
 
   void playerTwoBacksiesButtonAction() {
-    print("2 무르기 사용");
     isAlreadyUseBacksies = true;
     playerTwoBackCount -= 1;
     iconList[lastPlayerTwoX - 1][lastPlayerTwoY - 1] = Icons.abc;
     isPlayerOneTurn = !isPlayerOneTurn;
     index -= 1;
     recordData['($lastPlayerTwoX,$lastPlayerTwoY)'] = 0;
-    _backsiesButtonDisableCheck();
+    _playerOneBacksiesButtonDisableCheck();
+    _playerTwoBacksiesButtonDisableCheck();
     update();
   }
 
@@ -384,7 +383,7 @@ class GameController extends GetxController {
 
   /// 경기 중 메뉴 버튼 선택 시
   void showMenu() {
-    if (!isGameFinish()) {
+    if (!isGameFinish) {
       gameStatus = GameStatus.pause;
     } else {
       if (result == '무승부') {
@@ -408,22 +407,5 @@ class GameController extends GetxController {
       gameStatus = GameStatus.end;
     }
     update();
-  }
-
-  /// 게임이 끝났는지 체크. 놓은 순서를 보일지 판단하기 위해 사용.
-  bool isGameFinish() {
-    return gameStatus == GameStatus.draw ||
-            gameStatus == GameStatus.playerOneWin ||
-            gameStatus == GameStatus.playerTwoWin ||
-            gameStatus == GameStatus.end
-        ? true
-        : false;
-  }
-
-  /// 게임중이거나 결과 확인중이면 메뉴를 보이지 않는다.
-  bool isMenuVisible() {
-    return gameStatus == GameStatus.playing || gameStatus == GameStatus.end
-        ? false
-        : true;
   }
 }

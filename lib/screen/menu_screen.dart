@@ -15,7 +15,7 @@ class MenuScreen extends GetView<GameController> {
   Widget build(BuildContext context) {
     return GetBuilder<GameController>(
       builder: (controller) => Visibility(
-        visible: controller.isMenuVisible(),
+        visible: controller.isMenuVisible,
         child: Container(
           color: Colors.black54,
           alignment: Alignment.center,
@@ -39,7 +39,7 @@ class MenuScreen extends GetView<GameController> {
 
   SimpleButton _backButton(GameController controller) {
     return SimpleButton(
-      title: controller.isGameFinish() ? '결과 보기' : '돌아가기',
+      title: controller.isGameFinish ? '결과 보기' : '돌아가기',
       color: Colors.transparent,
       elevation: 0,
       onPressed: () => controller.hideMenu(),
@@ -66,7 +66,7 @@ class MenuScreen extends GetView<GameController> {
 
   Widget _saveButton(GameController controller) {
     return Visibility(
-      visible: controller.isGameFinish(),
+      visible: controller.isGameFinish,
       child: SimpleButton(
         onPressed: () => (!kIsWeb)
               ? showAlertDialog(

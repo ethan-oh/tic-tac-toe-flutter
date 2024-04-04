@@ -11,12 +11,12 @@ class RecordsController extends GetxController {
     fethcAllRecords();
   }
 
-  List<RecordModel> _records = [];
+  final RxList<RecordModel> _records = <RecordModel>[].obs;
   List<RecordModel> get records => _records;
 
   Future<void> fethcAllRecords() async {
-    _records = await DBHelper.fetchAllRecords();
-    update();
+    _records.value = await DBHelper.fetchAllRecords();
+    // update();
   }
 
   Future<void> deleteRecordById(int id) async {
