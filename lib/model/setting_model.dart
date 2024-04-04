@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tic_tac_toe_app/constant/enums.dart';
 
-class SettingModel {
+class GameSetting {
   int gridCount;
   int alignCount;
   IconData playerOneMarker;
@@ -10,7 +10,7 @@ class SettingModel {
   Color playerTwoColor;
   TurnOpt firstPlayer;
 
-  SettingModel({
+  GameSetting({
     required this.gridCount,
     required this.alignCount,
     required this.playerOneMarker,

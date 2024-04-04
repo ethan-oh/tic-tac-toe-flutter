@@ -43,6 +43,7 @@ class SettingController extends GetxController {
       if (isValid) {
         _align.value = value;
       } else {
+        Get.forceAppUpdate();
         showErrorSnackBar(
           title: '불가능',
           message: '게임판 크기를 벗어난 승리조건입니다!!',
@@ -54,7 +55,7 @@ class SettingController extends GetxController {
   void setMarker({required MarkerOpt? value, required bool isFirstMarker}) {
     if (value != null) {
       bool isValid =
-          _isMarkerValid(_playerOneMarker.value, _playerTwomarker.value, value);
+          (value != playerOneMarker) && (value != playerTwomarker);
       if (isValid) {
         if (isFirstMarker) {
           _playerOneMarker.value = value;
@@ -62,6 +63,7 @@ class SettingController extends GetxController {
           _playerTwomarker.value = value;
         }
       } else {
+        Get.forceAppUpdate();
         showErrorSnackBar(
           title: '불가능',
           message: '상대방과 동일한 마커는 선택 불가능합니다.',
@@ -73,7 +75,7 @@ class SettingController extends GetxController {
   void setColor({required ColorOpt? value, required bool isFirstColor}) {
     if (value != null) {
       bool isValid =
-          _isColorValid(_playerOneColor.value, _playerTwoColor.value, value);
+          (value != playerOneColor) && (value != playerTwoColor);
       if (isValid) {
         if (isFirstColor) {
           _playerOneColor.value = value;
@@ -81,6 +83,7 @@ class SettingController extends GetxController {
           _playerTwoColor.value = value;
         }
       } else {
+        Get.forceAppUpdate();
         showErrorSnackBar(
           title: '불가능',
           message: '상대방과 동일한 색상은 선택 불가능합니다.',
@@ -100,8 +103,8 @@ class SettingController extends GetxController {
   }
 
   // gameController에 전달하기 위한 setting 모델 생성.
-  SettingModel getCurrentSetting() {
-    return SettingModel(
+  GameSetting getCurrentSetting() {
+    return GameSetting(
       gridCount: _grid.value.grid,
       alignCount: _align.value.align,
       playerOneMarker: _playerOneMarker.value.marker,
@@ -124,15 +127,5 @@ class SettingController extends GetxController {
       case GridOpt.fiveByFive:
         return true;
     }
-  }
-
-  bool _isMarkerValid(MarkerOpt markerOneSegmentValue,
-      MarkerOpt markerTwoSegmentValue, MarkerOpt value) {
-    return (value != markerTwoSegmentValue) && (value != markerOneSegmentValue);
-  }
-
-  bool _isColorValid(ColorOpt colorOneSegmentValue,
-      ColorOpt colorTwoSegmentValue, ColorOpt value) {
-    return (value != colorTwoSegmentValue) && (value != colorOneSegmentValue);
   }
 }
