@@ -9,7 +9,7 @@ import 'package:tic_tac_toe_app/screen/menu_screen.dart';
 import 'package:tic_tac_toe_app/widget/game/player_info.dart';
 
 class GameScreen extends GetView<GameController> {
-  final SettingModel settings;
+  final GameSetting settings;
   const GameScreen({super.key, required this.settings});
 
   @override

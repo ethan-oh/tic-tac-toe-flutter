@@ -100,8 +100,8 @@ class SettingController extends GetxController {
   }
 
   // gameController에 전달하기 위한 setting 모델 생성.
-  SettingModel getCurrentSetting() {
-    return SettingModel(
+  GameSetting getCurrentSetting() {
+    return GameSetting(
       gridCount: _grid.value.grid,
       alignCount: _align.value.align,
       playerOneMarker: _playerOneMarker.value.marker,

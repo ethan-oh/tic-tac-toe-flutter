@@ -16,7 +16,7 @@ class GameController extends GetxController {
     _gameInit();
   }
 
-  final SettingModel settings;
+  final GameSetting settings;
   GameController(this.settings);
 
   // setting model을 통해 받아온 설정값을 변수에 저장

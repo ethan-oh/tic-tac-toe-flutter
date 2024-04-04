@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tic_tac_toe_app/constant/enums.dart';
 
-class SettingModel {
+class GameSetting {
   int gridCount;
   int alignCount;
   IconData playerOneMarker;
@@ -10,7 +10,7 @@ class SettingModel {
   Color playerTwoColor;
   TurnOpt firstPlayer;
 
-  SettingModel({
+  GameSetting({
     required this.gridCount,
     required this.alignCount,
     required this.playerOneMarker,
@@ -23,4 +23,20 @@ class SettingModel {
   setGrid(int value){
     gridCount = value;
   }
+  setAlign(int value){
+    alignCount = value;
+  }
+  setPlayerOneMarker(IconData value){
+    playerOneMarker = value;
+  }
+  setPlayerTwoMarker(IconData value){
+    playerTwoMarker = value;
+  }
+  setPlayerOneColor(Color value){
+    playerOneColor = value;
+  }
+  setPlayerTwoColor(Color value){
+    playerTwoColor = value;
+  }
+
 }
